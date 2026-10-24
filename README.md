@@ -36,10 +36,9 @@ python3 scripts/get_page.py algorithm-gptq --follow-sources
 python3 scripts/build_index.py
 python3 scripts/validate.py
 python3 scripts/build_index.py --check
-python3 -m unittest discover -s tests -v
 python3 scripts/check_shared.py --peer ../model-architecture-wiki
 ```
 
-校验覆盖页面元数据、ID、引用关系、本地链接及基础标题锚点；不验证外网可达性或算法正确性。内容仍需核对原论文与官方源码。来源阅读优先 LaTeX 源码，其次 HTML，必要时补看 PDF；已完成的 HTML 阅读按实际记录，不改写为已读 LaTeX。`check_shared.py` 比对两库共享文件（`CONVENTIONS.md`、`sources/SPEC.md`、`scripts/` 与 `tests/test_shared_tools.py`）的哈希，改共享文件须同步两库。
+校验覆盖页面元数据、ID、引用关系、本地链接及基础标题锚点；不验证外网可达性或算法正确性。内容仍需核对原论文与官方源码。来源阅读优先 LaTeX 源码，其次 HTML，必要时补看 PDF；已完成的 HTML 阅读按实际记录，不改写为已读 LaTeX。`check_shared.py` 比对两库共享文件（`CONVENTIONS.md`、`sources/SPEC.md`、`scripts/`）的哈希，改共享文件须同步两库。
 
 后续优先补齐文本 dLLM 的直接量化证据、目标后端的具体适配与真实实验案例。当前没有数据库、向量服务、量化执行器或自动兼容判定器。

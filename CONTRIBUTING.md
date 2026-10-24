@@ -30,11 +30,10 @@
 python3 scripts/validate.py
 python3 scripts/build_index.py
 python3 scripts/build_index.py --check
-python3 -m unittest discover -s tests -v
 python3 scripts/check_shared.py --peer ../model-architecture-wiki
 ```
 
-格式和工具测试不能证明论文解释正确。发布前还需人工核对关键公式和数据。
+格式校验不能证明论文解释正确。发布前还需人工核对关键公式和数据。
 
 
-标签使用小写英文机制词，与生成索引中已有词复用；中文同义词放在别名或正文。阅读论文优先可获取的 LaTeX 源码，其次 HTML，PDF 用于补充，来源页的 `read_form` 记录实际阅读形式。`CONVENTIONS.md`、`sources/SPEC.md` 与 `scripts/`、`tests/test_shared_tools.py` 属跨库共享文件，改动须同步另一仓库并跑 `check_shared.py`。
+标签使用小写英文机制词，与生成索引中已有词复用；中文同义词放在别名或正文。阅读论文优先可获取的 LaTeX 源码，其次 HTML，PDF 用于补充，来源页的 `read_form` 记录实际阅读形式。`CONVENTIONS.md`、`sources/SPEC.md` 与 `scripts/` 属跨库共享文件，改动须同步另一仓库并跑 `check_shared.py`。
