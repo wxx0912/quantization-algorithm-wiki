@@ -1,5 +1,32 @@
 ---
-{"id":"algorithm-omniquant","title":"OmniQuant：联合学习 clipping 与等价变换","type":"algorithm","tags":["joint-optimization","clipping","scaling","block-reconstruction"],"aliases":["OmniQuant","LET","LWC","可学习等价变换"],"related":["algorithm-smoothquant","algorithm-gptq"],"sources":["paper-omniquant","repo-omniquant"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-omniquant",
+  "title": "OmniQuant：联合学习 clipping 与等价变换",
+  "type": "algorithm",
+  "tags": [
+    "joint-optimization",
+    "clipping",
+    "scaling",
+    "block-reconstruction"
+  ],
+  "aliases": [
+    "OmniQuant",
+    "LET",
+    "LWC",
+    "可学习等价变换"
+  ],
+  "related": [
+    "algorithm-smoothquant",
+    "algorithm-gptq"
+  ],
+  "sources": [
+    "paper-omniquant",
+    "repo-omniquant"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # OmniQuant

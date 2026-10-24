@@ -1,5 +1,40 @@
 ---
-{"id":"case-paper-evidence","title":"量化论文性能证据：案例导航与可比边界","type":"case","tags":["paper-evidence","benchmark","latency","kernel","comparison"],"aliases":["论文性能案例","单层 benchmark","延迟估算"],"related":["algorithm-gptq","algorithm-quarot","algorithm-svdquant","guide-deployment-evidence","guide-architecture-transfer"],"sources":["paper-gptq","paper-quarot","paper-svdquant","repo-nunchaku","paper-viditq","source-viditq","code-viditq"],"updated":"2026-10-23"}
+{
+  "id": "case-paper-evidence",
+  "title": "量化论文性能证据：案例导航与可比边界",
+  "type": "case",
+  "tags": [
+    "paper-evidence",
+    "benchmark",
+    "latency",
+    "kernel",
+    "comparison"
+  ],
+  "aliases": [
+    "论文性能案例",
+    "单层 benchmark",
+    "延迟估算"
+  ],
+  "related": [
+    "algorithm-gptq",
+    "algorithm-quarot",
+    "algorithm-svdquant",
+    "guide-deployment-evidence",
+    "guide-architecture-transfer"
+  ],
+  "sources": [
+    "paper-gptq",
+    "paper-quarot",
+    "paper-svdquant",
+    "repo-nunchaku",
+    "paper-viditq",
+    "source-viditq",
+    "code-viditq"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "mixed",
+  "updated": "2026-10-23"
+}
 ---
 
 # 量化论文性能证据：案例导航与可比边界

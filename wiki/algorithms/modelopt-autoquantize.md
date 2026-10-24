@@ -1,5 +1,31 @@
 ---
-{"id":"algorithm-modelopt-autoquantize","title":"ModelOpt AutoQuantize：受成本约束的格式搜索","type":"algorithm","tags":["mixed-precision","search","fisher","modelopt","cost-constraint"],"aliases":["AutoQuantize","auto_quantize","自动混精"],"related":["algorithm-hawq","guide-architecture-transfer"],"sources":["code-modelopt-autoquantize"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-modelopt-autoquantize",
+  "title": "ModelOpt AutoQuantize：受成本约束的格式搜索",
+  "type": "algorithm",
+  "tags": [
+    "mixed-precision",
+    "search",
+    "fisher",
+    "modelopt",
+    "cost-constraint"
+  ],
+  "aliases": [
+    "AutoQuantize",
+    "auto_quantize",
+    "自动混精"
+  ],
+  "related": [
+    "algorithm-hawq",
+    "guide-architecture-transfer"
+  ],
+  "sources": [
+    "code-modelopt-autoquantize"
+  ],
+  "confidence": "verified",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # ModelOpt AutoQuantize：受成本约束的格式搜索
@@ -92,4 +118,4 @@ AutoQuantize 应在合法候选集合内做选择；AWQ 等是某些候选的量
 
 最小消融应固定数据、分组与预算，比较统一格式、gradient 搜索、KL 搜索；同时记录实际预算达成值、全模型任务指标、未量化比例、导出成功率。更换成本模型时分别报告存储成本与 active-MoE 成本，不把两者排序直接比较。验证后端时测目标 batch、序列长度和硬件上的真实端到端表现。
 
-本文不提供未经核实的 Nemotron 量化收益数字，也没有独立运行该版本的质量实验。第一版证据是锁定源码机制与约束；具体模型效果仍需案例页或实测支持。参见 [架构迁移](../guides/architecture-transfer.md) 与 [来源登记](../../sources/mixed-architecture.md)。
+本文不提供未经核实的 Nemotron 量化收益数字，也没有独立运行该版本的质量实验。第一版证据是锁定源码机制与约束；具体模型效果仍需案例页或实测支持。参见 [架构迁移](../guides/architecture-transfer.md) 与 [来源登记](../../sources/topics/mixed-architecture.md)。

@@ -1,5 +1,31 @@
 ---
-{"id":"algorithm-brecq","title":"BRECQ：块级重构与输出敏感度","type":"algorithm","tags":["ptq","block-reconstruction","rounding","fisher","vision"],"aliases":["Block Reconstruction","Pushing the Limit of Post-Training Quantization"],"related":["algorithm-adaround","algorithm-autoround"],"sources":["paper-brecq","repo-brecq"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-brecq",
+  "title": "BRECQ：块级重构与输出敏感度",
+  "type": "algorithm",
+  "tags": [
+    "ptq",
+    "block-reconstruction",
+    "rounding",
+    "fisher",
+    "vision"
+  ],
+  "aliases": [
+    "Block Reconstruction",
+    "Pushing the Limit of Post-Training Quantization"
+  ],
+  "related": [
+    "algorithm-adaround",
+    "algorithm-autoround"
+  ],
+  "sources": [
+    "paper-brecq",
+    "repo-brecq"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # BRECQ：块级重构与输出敏感度

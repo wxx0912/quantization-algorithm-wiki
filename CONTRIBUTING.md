@@ -6,9 +6,9 @@
 
 `wiki/` 下除模板以外，每篇页面使用 `---` 分隔的 JSON frontmatter。JSON 是 YAML 1.2 子集；这里显式限定为 JSON，便于使用 Python 标准库严格解析，不实现不完整的通用 YAML 解析器。
 
-必填字段：`id`、`title`、`type`、`tags`、`aliases`、`related`、`sources`、`updated`。类型为 `algorithm`、`foundation`、`guide`、`recipe`、`case`；数组字段均为字符串数组。稳定 ID 使用小写英文和连字符，更新标题不改变 ID。`updated` 只表示页面最近编辑日期，不表示整篇内容已经实测。
+必填字段：`id`、`title`、`type`、`tags`、`aliases`、`related`、`sources`、`confidence`、`evidence_scope`、`updated`。类型为 `algorithm`、`foundation`、`guide`、`recipe`、`case`；数组字段均为字符串数组。稳定 ID 使用小写英文和连字符，更新标题不改变 ID。`updated` 只表示页面最近编辑日期，不表示整篇内容已经实测。`confidence` 与 `evidence_scope` 表示整体证据强度与范围，取值见 `CONVENTIONS.md` 第 2.5 节，不覆盖章节级的强弱差异。
 
-来源按责任主题登记在 `sources/*.md` 的表格中，格式为 `| ID | 类型 | URL | 版本与已读定位 |`，ID 用反引号。来源 ID 全库唯一。论文与代码分开登记，论文固定版本，源码固定 commit；正文进一步指出支持该结论的章节、公式、表格或函数。
+一来源一文件：论文与会议论文放 `sources/papers/`，代码库放 `sources/repos/`，文件名即来源 ID，全库唯一。字段契约与校验规则见 [来源页规范](sources/SPEC.md)，主题级说明见 `sources/topics/`。每篇来源页含固定四节正文，`read_locator` 指出支持结论的章节、公式、表格、文件路径或函数；论文固定版本，源码固定 commit。`sources/` 下不使用来源表格，索引由脚本生成。
 
 每一项关键结论都应能追溯到对应来源。不得用一个页面级的“verified”标签覆盖不同强度的证据：正文明确区分论文报告、源码核对、项目实测和迁移假设。仅有 README 声明的支持，不写成已核对 kernel 实现。
 
@@ -31,9 +31,10 @@ python3 scripts/validate.py
 python3 scripts/build_index.py
 python3 scripts/build_index.py --check
 python3 -m unittest discover -s tests -v
+python3 scripts/check_shared.py --peer ../model-architecture-wiki
 ```
 
-格式和工具测试不能证明论文解释正确。发布前还需人工核对关键公式和数据，以及 [情景验收](docs/acceptance.md) 中的证据链。
+格式和工具测试不能证明论文解释正确。发布前还需人工核对关键公式和数据。
 
 
-标签使用小写英文机制词，与生成索引中已有词复用；中文同义词放在别名或正文。阅读论文优先可获取的 LaTeX 源码，其次 HTML，PDF 用于补充，来源表记录实际阅读形式。
+标签使用小写英文机制词，与生成索引中已有词复用；中文同义词放在别名或正文。阅读论文优先可获取的 LaTeX 源码，其次 HTML，PDF 用于补充，来源页的 `read_form` 记录实际阅读形式。`CONVENTIONS.md`、`sources/SPEC.md` 与 `scripts/`、`tests/test_shared_tools.py` 属跨库共享文件，改动须同步另一仓库并跑 `check_shared.py`。

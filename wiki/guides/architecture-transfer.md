@@ -1,5 +1,44 @@
 ---
-{"id":"guide-architecture-transfer","title":"从 AR 到 MoE、dLLM、DiT 与 VLM：量化迁移需要的证据","type":"guide","tags":["architecture","ar","moe","dllm","dit","vlm","calibration","transfer","denoising","mask"],"aliases":["ViDiT-Q","ViDiT-Q-MP","架构适配","生成过程量化"],"related":["algorithm-hawq","algorithm-modelopt-autoquantize","algorithm-awq","algorithm-smoothquant"],"sources":["paper-awq-architecture","paper-llada-architecture","paper-viditq","source-viditq","code-viditq","code-modelopt-autoquantize"],"updated":"2026-10-23"}
+{
+  "id": "guide-architecture-transfer",
+  "title": "从 AR 到 MoE、dLLM、DiT 与 VLM：量化迁移需要的证据",
+  "type": "guide",
+  "tags": [
+    "architecture",
+    "ar",
+    "moe",
+    "dllm",
+    "dit",
+    "vlm",
+    "calibration",
+    "transfer",
+    "denoising",
+    "mask"
+  ],
+  "aliases": [
+    "ViDiT-Q",
+    "ViDiT-Q-MP",
+    "架构适配",
+    "生成过程量化"
+  ],
+  "related": [
+    "algorithm-hawq",
+    "algorithm-modelopt-autoquantize",
+    "algorithm-awq",
+    "algorithm-smoothquant"
+  ],
+  "sources": [
+    "paper-awq-architecture",
+    "paper-llada-architecture",
+    "paper-viditq",
+    "source-viditq",
+    "code-viditq",
+    "code-modelopt-autoquantize"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "mixed",
+  "updated": "2026-10-23"
+}
 ---
 
 # 从 AR 到 MoE、dLLM、DiT 与 VLM：量化迁移需要的证据
@@ -75,7 +114,7 @@ Table 1 的 STDiT/OpenSORA VBench 结果摘录如下，保留多维指标，不�
 
 - [`quant_utils/qdiff/base/base_quantizer.py`](https://github.com/A-suozhang/ViDiT-Q/blob/a8add8be17ad91069aba7a7209aa88e04b2fe41e/quant_utils/qdiff/base/base_quantizer.py)：`DynamicQuantizer` 在线沿二维输入每一行计算 min/max 或 absmax，并返回反量化值；这条 Python 路径是伪量化。
 - [`quant_utils/qdiff/viditq/viditq_quant_layer.py`](https://github.com/A-suozhang/ViDiT-Q/blob/a8add8be17ad91069aba7a7209aa88e04b2fe41e/quant_utils/qdiff/viditq/viditq_quant_layer.py)：把输入 reshape 为 `[B*N_token,C]`，实现逐 token 激活范围。当前类还加入 Hadamard 旋转，不能称为论文 Eq. (1) 的逐行复现。
-- 当前 `channel_mask = weight_max**alpha / act_max**(1-alpha)`，输入乘 mask、权重除 mask；相对论文记号，需要同时考虑倒数与 $\alpha\leftrightarrow1-\alpha$，不能照搬论文超参数值。
+- 当前 `channel_mask = weight_max**alpha / act_max**(1-alpha)`（源码为 `weight_mask.abs()**alpha / act_mask.abs()**(1-alpha)`，对 mask 取 `.abs()` 后负值取幂得 NaN），输入乘 mask、权重除 mask；相对论文记号，需要同时考虑倒数与 $\alpha\leftrightarrow1-\alpha$，不能照搬论文超参数值。
 - README 区分 `software_simulation` 和 `hardware` 配置；后者导出整数权重并使用扩展 kernel。是否覆盖目标模型与所有混精模式，仍需实际配置和运行验证。
 
 ### 对 Agent 的可迁移启发
@@ -108,4 +147,4 @@ Table 1 的 STDiT/OpenSORA VBench 结果摘录如下，保留多维指标，不�
 
 只有代数等价、或只有相近架构的论文分数时，状态应为“候选迁移”。至少在目标计算图、数据状态、格式/后端和完整生成指标上完成验证，才标记为目标场景可执行。若某一步变换改变了统计坐标或生成轨迹，重采相关统计；如果性能仅有估算，保留“估算”标签而不写加速承诺。
 
-相关：[AutoQuantize](../algorithms/modelopt-autoquantize.md)、[HAWQ](../algorithms/hawq.md)、[来源登记](../../sources/mixed-architecture.md)。
+相关：[AutoQuantize](../algorithms/modelopt-autoquantize.md)、[HAWQ](../algorithms/hawq.md)、[来源登记](../../sources/topics/mixed-architecture.md)。

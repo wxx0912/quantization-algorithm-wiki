@@ -1,5 +1,31 @@
 ---
-{"id":"algorithm-gptq","title":"GPTQ：基于输入二阶统计的权重重构","type":"algorithm","tags":["weight-reconstruction","hessian","weight-only","calibration"],"aliases":["GPTQ","二阶量化","权重误差补偿"],"related":["algorithm-quarot","algorithm-smoothquant"],"sources":["paper-gptq","repo-gptq"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-gptq",
+  "title": "GPTQ：基于输入二阶统计的权重重构",
+  "type": "algorithm",
+  "tags": [
+    "weight-reconstruction",
+    "hessian",
+    "weight-only",
+    "calibration"
+  ],
+  "aliases": [
+    "GPTQ",
+    "二阶量化",
+    "权重误差补偿"
+  ],
+  "related": [
+    "algorithm-quarot",
+    "algorithm-smoothquant"
+  ],
+  "sources": [
+    "paper-gptq",
+    "repo-gptq"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # GPTQ

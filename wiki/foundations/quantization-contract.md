@@ -1,5 +1,37 @@
 ---
-{"id":"foundation-quantization-contract","title":"量化术语与最小数值契约","type":"foundation","tags":["quantizer","format","deployment","calibration"],"aliases":["量化基础","W4A4","W4A16","scale","zero-point","静态量化","动态量化"],"related":["algorithm-baselines","algorithm-gptq","algorithm-quarot"],"sources":["repo-gptq","paper-quarot","paper-smoothquant"],"updated":"2026-10-23"}
+{
+  "id": "foundation-quantization-contract",
+  "title": "量化术语与最小数值契约",
+  "type": "foundation",
+  "tags": [
+    "quantizer",
+    "format",
+    "deployment",
+    "calibration"
+  ],
+  "aliases": [
+    "量化基础",
+    "W4A4",
+    "W4A16",
+    "scale",
+    "zero-point",
+    "静态量化",
+    "动态量化"
+  ],
+  "related": [
+    "algorithm-baselines",
+    "algorithm-gptq",
+    "algorithm-quarot"
+  ],
+  "sources": [
+    "repo-gptq",
+    "paper-quarot",
+    "paper-smoothquant"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "mixed",
+  "updated": "2026-10-23"
+}
 ---
 
 # 量化术语与最小数值契约

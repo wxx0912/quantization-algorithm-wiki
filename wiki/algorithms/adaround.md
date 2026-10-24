@@ -1,5 +1,30 @@
 ---
-{"id":"algorithm-adaround","title":"AdaRound：固定量化网格上的自适应舍入","type":"algorithm","tags":["ptq","rounding","reconstruction","vision"],"aliases":["Adaptive Rounding","Up or Down"],"related":["algorithm-brecq","algorithm-autoround"],"sources":["paper-adaround","repo-adaround"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-adaround",
+  "title": "AdaRound：固定量化网格上的自适应舍入",
+  "type": "algorithm",
+  "tags": [
+    "ptq",
+    "rounding",
+    "reconstruction",
+    "vision"
+  ],
+  "aliases": [
+    "Adaptive Rounding",
+    "Up or Down"
+  ],
+  "related": [
+    "algorithm-brecq",
+    "algorithm-autoround"
+  ],
+  "sources": [
+    "paper-adaround",
+    "repo-adaround"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # AdaRound：固定量化网格上的自适应舍入

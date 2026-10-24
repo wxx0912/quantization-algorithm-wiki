@@ -1,5 +1,31 @@
 ---
-{"id":"algorithm-smoothquant","title":"SmoothQuant：在权重与激活之间迁移量化难度","type":"algorithm","tags":["equivalent-transformation","scaling","activation","calibration"],"aliases":["SmoothQuant","平滑量化","激活离群值"],"related":["algorithm-gptq","algorithm-omniquant"],"sources":["paper-smoothquant","repo-smoothquant"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-smoothquant",
+  "title": "SmoothQuant：在权重与激活之间迁移量化难度",
+  "type": "algorithm",
+  "tags": [
+    "equivalent-transformation",
+    "scaling",
+    "activation",
+    "calibration"
+  ],
+  "aliases": [
+    "SmoothQuant",
+    "平滑量化",
+    "激活离群值"
+  ],
+  "related": [
+    "algorithm-gptq",
+    "algorithm-omniquant"
+  ],
+  "sources": [
+    "paper-smoothquant",
+    "repo-smoothquant"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # SmoothQuant

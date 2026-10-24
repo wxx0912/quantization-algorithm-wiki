@@ -1,5 +1,33 @@
 ---
-{"id":"algorithm-spinquant","title":"SpinQuant：学习正交旋转以降低量化损失","type":"algorithm","tags":["ptq","rotation","learned-transform","w4a4","kv-cache"],"aliases":["SpinQuant","learned rotation","学习旋转"],"related":["algorithm-quarot","algorithm-gptq","algorithm-flatquant"],"sources":["paper-spinquant","repo-spinquant"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-spinquant",
+  "title": "SpinQuant：学习正交旋转以降低量化损失",
+  "type": "algorithm",
+  "tags": [
+    "ptq",
+    "rotation",
+    "learned-transform",
+    "w4a4",
+    "kv-cache"
+  ],
+  "aliases": [
+    "SpinQuant",
+    "learned rotation",
+    "学习旋转"
+  ],
+  "related": [
+    "algorithm-quarot",
+    "algorithm-gptq",
+    "algorithm-flatquant"
+  ],
+  "sources": [
+    "paper-spinquant",
+    "repo-spinquant"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # SpinQuant：学习正交旋转以降低量化损失
@@ -72,4 +100,4 @@ Table 1 覆盖 LLaMA-2 7B/13B/70B 与 LLaMA-3 8B/70B；不能外推为 MoE、dLL
 
 有区分力的实验：固定样本、量化范围、最终 GPTQ 配置和评测集，比较无旋转、随机旋转多种子、学习旋转多种子；另比较学习时 W4 与 W16、最终都使用同样 GPTQ。记录正交误差、量化前后层输出误差、最终 PPL/任务准确率，以及旋转训练成本。若只比较不同后端、不同 KV 位宽的最终分数，无法归因于学习旋转。
 
-来源登记见 [transforms](../../sources/transforms.md)。
+来源登记见 [transforms](../../sources/topics/transforms.md)。

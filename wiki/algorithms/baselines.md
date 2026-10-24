@@ -1,5 +1,37 @@
 ---
-{"id":"algorithm-baselines","title":"基础基线：RTN、MinMax、AbsMax 与 MSE 范围校准","type":"algorithm","tags":["rtn","calibration","clipping","quantizer"],"aliases":["RTN","MinMax","AbsMax","MSE","最邻近舍入","范围校准"],"related":["algorithm-gptq","algorithm-smoothquant","algorithm-omniquant"],"sources":["repo-gptq","paper-gptq","paper-smoothquant","paper-omniquant"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-baselines",
+  "title": "基础基线：RTN、MinMax、AbsMax 与 MSE 范围校准",
+  "type": "algorithm",
+  "tags": [
+    "rtn",
+    "calibration",
+    "clipping",
+    "quantizer"
+  ],
+  "aliases": [
+    "RTN",
+    "MinMax",
+    "AbsMax",
+    "MSE",
+    "最邻近舍入",
+    "范围校准"
+  ],
+  "related": [
+    "algorithm-gptq",
+    "algorithm-smoothquant",
+    "algorithm-omniquant"
+  ],
+  "sources": [
+    "repo-gptq",
+    "paper-gptq",
+    "paper-smoothquant",
+    "paper-omniquant"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # 基础基线：RTN 与范围校准

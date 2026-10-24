@@ -1,5 +1,31 @@
 ---
-{"id":"algorithm-quarot","title":"QuaRot：旋转坐标中的低比特推理","type":"algorithm","tags":["rotation","equivalent-transformation","activation","kv-cache"],"aliases":["QuaRot","Hadamard","随机旋转"],"related":["algorithm-gptq","algorithm-omniquant"],"sources":["paper-quarot","repo-quarot"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-quarot",
+  "title": "QuaRot：旋转坐标中的低比特推理",
+  "type": "algorithm",
+  "tags": [
+    "rotation",
+    "equivalent-transformation",
+    "activation",
+    "kv-cache"
+  ],
+  "aliases": [
+    "QuaRot",
+    "Hadamard",
+    "随机旋转"
+  ],
+  "related": [
+    "algorithm-gptq",
+    "algorithm-omniquant"
+  ],
+  "sources": [
+    "paper-quarot",
+    "repo-quarot"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # QuaRot

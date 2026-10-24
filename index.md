@@ -20,4 +20,4 @@
 4. [W4A4 是否意味着加速](wiki/guides/deployment-evidence.md)：区分存储、伪量化、kernel、局部与整模性能。
 5. [论文案例与实现证据导航](wiki/cases/paper-evidence.md)：按证据范围阅读，具体数值保留在算法页。
 
-[完整稳定 ID 与标签索引](index.generated.md) · [来源索引](sources/README.md) · [Agent 使用说明](AGENT_GUIDE.md)
+[完整稳定 ID 与标签索引](index.generated.md) · [来源索引](sources/README.md) · [来源页规范](sources/SPEC.md) · [Agent 入口](SKILL.md)

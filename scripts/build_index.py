@@ -1,33 +1,31 @@
-"""由页面元数据生成索引，正文内容不复制到索引。"""
+"""由页面与来源元数据生成索引，正文内容不复制到索引。"""
 import argparse
-from wiki import ROOT, pages
+import sys
+
+from wiki_common import ROOT, pages, render_page_index, render_source_index, sources, vocabulary
 
 
 def render():
-    records = pages()
-    lines = ["# 页面索引", "", "> 由 `python3 scripts/build_index.py` 生成，请勿手改。", ""]
-    for kind, label in (("foundation", "基础"), ("algorithm", "算法"), ("guide", "指南"), ("recipe", "Recipe"), ("case", "案例")):
-        lines.extend([f"## {label}", ""])
-        for path, meta, _ in sorted(records, key=lambda r: r[1]["id"]):
-            if meta["type"] == kind:
-                lines.append(f"- `{meta['id']}` — [{meta['title']}]({path.relative_to(ROOT).as_posix()})")
-        lines.append("")
-    lines.extend(["## 按机制标签", ""])
-    for tag in sorted({tag for _, meta, _ in records for tag in meta["tags"]}):
-        links = [f"[{meta['title']}]({path.relative_to(ROOT).as_posix()})" for path, meta, _ in records if tag in meta["tags"]]
-        lines.append(f"- `{tag}`：" + "；".join(links))
-    return "\n".join(lines) + "\n"
+    vocab = vocabulary(ROOT)
+    records = pages(ROOT)
+    return [(ROOT / "index.generated.md", render_page_index(ROOT, records, vocab)),
+            (ROOT / "sources/INDEX.generated.md",
+             render_source_index(ROOT, sources(ROOT), records, vocab))]
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    path = ROOT / "index.generated.md"
-    content = render()
+    stale = []
+    for path, content in render():
+        if args.check:
+            if not path.exists() or path.read_text(encoding="utf-8") != content:
+                stale.append(path.relative_to(ROOT).as_posix())
+        else:
+            path.write_text(content, encoding="utf-8")
     if args.check:
-        if not path.exists() or path.read_text(encoding="utf-8") != content:
-            parser.exit(1, "索引缺失或过期，请运行 scripts/build_index.py\n")
+        if stale:
+            print(f"索引缺失或过期: {', '.join(stale)}；请运行 python3 scripts/build_index.py", file=sys.stderr)
+            sys.exit(1)
         print("索引与页面元数据一致")
-    else:
-        path.write_text(content, encoding="utf-8")

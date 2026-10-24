@@ -1,5 +1,39 @@
 ---
-{"id":"guide-algorithm-selection","title":"从量化问题选择候选方法","type":"guide","tags":["selection","calibration","diagnosis"],"aliases":["GPTQ 与 AWQ","算法选择","掉点","权重重构","离群值"],"related":["algorithm-gptq","algorithm-awq","algorithm-baselines","algorithm-smoothquant","algorithm-quarot","algorithm-omniquant"],"sources":["paper-awq","paper-gptq","paper-smoothquant","paper-quarot","paper-omniquant"],"updated":"2026-10-23"}
+{
+  "id": "guide-algorithm-selection",
+  "title": "从量化问题选择候选方法",
+  "type": "guide",
+  "tags": [
+    "selection",
+    "calibration",
+    "diagnosis"
+  ],
+  "aliases": [
+    "GPTQ 与 AWQ",
+    "算法选择",
+    "掉点",
+    "权重重构",
+    "离群值"
+  ],
+  "related": [
+    "algorithm-gptq",
+    "algorithm-awq",
+    "algorithm-baselines",
+    "algorithm-smoothquant",
+    "algorithm-quarot",
+    "algorithm-omniquant"
+  ],
+  "sources": [
+    "paper-awq",
+    "paper-gptq",
+    "paper-smoothquant",
+    "paper-quarot",
+    "paper-omniquant"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "mixed",
+  "updated": "2026-10-23"
+}
 ---
 
 # 从量化问题选择候选方法

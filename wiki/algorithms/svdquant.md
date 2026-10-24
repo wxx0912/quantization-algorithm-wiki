@@ -1,5 +1,34 @@
 ---
-{"id":"algorithm-svdquant","title":"SVDQuant：低秩分支吸收异常值","type":"algorithm","tags":["ptq","low-rank","compensation","diffusion","dit","w4a4"],"aliases":["SVDQuant","Nunchaku","低秩异常值吸收"],"related":["algorithm-smoothquant","algorithm-flatquant"],"sources":["paper-svdquant","repo-svdquant","repo-nunchaku"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-svdquant",
+  "title": "SVDQuant：低秩分支吸收异常值",
+  "type": "algorithm",
+  "tags": [
+    "ptq",
+    "low-rank",
+    "compensation",
+    "diffusion",
+    "dit",
+    "w4a4"
+  ],
+  "aliases": [
+    "SVDQuant",
+    "Nunchaku",
+    "低秩异常值吸收"
+  ],
+  "related": [
+    "algorithm-smoothquant",
+    "algorithm-flatquant"
+  ],
+  "sources": [
+    "paper-svdquant",
+    "repo-svdquant",
+    "repo-nunchaku"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # SVDQuant：低秩分支吸收异常值
@@ -64,7 +93,7 @@ Nunchaku 将低秩 **down projection 与 activation quantization** 融合以共�
 
 - [`GEMM_W4A4::quantize`](https://github.com/mit-han-lab/nunchaku/blob/302e0e97024ebd68688fe890e5df83731edf7b54/src/Linear.cpp#L444) 分配 packed activation、scales 和低秩中间结果，并在开启融合时调用 `quantize_w4a4_act_fuse_lora`。
 - [`quantize_w4a4_fuse_lora_kernel`](https://github.com/mit-han-lab/nunchaku/blob/302e0e97024ebd68688fe890e5df83731edf7b54/src/kernels/zgemm/gemm_w4a4.cuh#L1098) 包含 `EpilogueLoraDown`；[`launch_lora`](https://github.com/mit-han-lab/nunchaku/blob/302e0e97024ebd68688fe890e5df83731edf7b54/src/kernels/zgemm/gemm_w4a4_launch_impl.cuh#L196) 将低秩 up/down 与 GEMM epilogue 组合。
-- 当前 `Linear.cpp` 中 INT4 scales 按输入维度 64 分组，FP4 路径为 16，并用 FP8_E4M3 scales；这与论文 v1 的 FP4 group 32 不同。必须区分论文格式与当前导出/runtime 合约。
+- 当前 `Linear.cpp` 中权重与激活 scales：INT4 路径按输入维度 64 分组、scale 为模型 dtype，FP4 路径按 16 分组并用 FP8_E4M3 scales；论文 v1 的 FP4 group 为 32（论文侧数值，未联网复核）。必须区分论文格式与当前导出/runtime 合约。
 
 这是静态调用链核验，没有编译 kernel 或在目标 GPU 验证。不能由 DeepCompressor 的 fake-quant 评测替代真实 kernel 数值与速度验证。
 
@@ -87,4 +116,4 @@ DeepCompressor commit：`69f3473f5e1c1504bae35cc50c7858ef900a9b17`。
 
 建议保持 prompt、scheduler、steps、seed、W/A 格式不变，对比无 smoothing、仅 smoothing、smoothing+rank 16/32、一次 SVD 与迭代校准。分别记录权重残差谱、各去噪阶段输出误差、图像质量和相似度；性能另比较 unfused/fused、相同 batch/resolution 的端到端延迟和峰值显存。把误差改善归因到算法、把延迟改善归因到实际 kernel，避免以理论 FLOPs 代替速度。
 
-来源登记见 [transforms](../../sources/transforms.md)。
+来源登记见 [transforms](../../sources/topics/transforms.md)。

@@ -1,0 +1,39 @@
+{
+  "page_types": [
+    {"name": "foundation", "label": "基础"},
+    {"name": "algorithm", "label": "算法"},
+    {"name": "guide", "label": "指南"},
+    {"name": "recipe", "label": "Recipe"},
+    {"name": "case", "label": "案例"}
+  ],
+  "tags": [
+    "activation", "ar", "architecture", "benchmark", "block-reconstruction",
+    "calibration", "clipping", "comparison", "compensation", "composition",
+    "cost-constraint", "denoising", "deployment", "diagnosis", "diffusion",
+    "dit", "dllm", "equivalent-transformation", "fisher", "format",
+    "hessian", "joint-optimization", "kernel", "kv-cache", "latency",
+    "learned-transform", "llm", "low-rank", "mask", "mixed-precision",
+    "modelopt", "moe", "outlier", "paper-evidence", "performance", "ptq",
+    "qat", "quantizer", "reconstruction", "rotation", "rounding", "rtn",
+    "scaling", "search", "selection", "sensitivity", "transfer", "validation",
+    "vision", "vlm", "w4a4", "weight-only", "weight-reconstruction"
+  ],
+  "alias_expansions": {
+    "量化基础": ["foundation-quantization-contract"],
+    "怎么选算法": ["guide-algorithm-selection", "algorithm-baselines"],
+    "掉点": ["guide-algorithm-selection", "algorithm-gptq", "algorithm-awq"],
+    "校准": ["foundation-quantization-contract", "algorithm-baselines", "guide-algorithm-selection"],
+    "组合": ["recipe-composition"],
+    "混合精度": ["algorithm-hawq", "algorithm-modelopt-autoquantize"],
+    "W4A4 加速": ["guide-deployment-evidence", "case-paper-evidence"],
+    "架构迁移": ["guide-architecture-transfer"],
+    "KV cache": ["foundation-quantization-contract", "algorithm-flatquant", "algorithm-spinquant"],
+    "论文结果": ["case-paper-evidence"]
+  },
+  "source_topics": [
+    {"name": "core", "label": "基础与样章"},
+    {"name": "reconstruction", "label": "重构与舍入"},
+    {"name": "transforms", "label": "变换与低秩"},
+    {"name": "mixed-architecture", "label": "混精与架构"}
+  ]
+}

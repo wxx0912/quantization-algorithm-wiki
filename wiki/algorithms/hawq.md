@@ -1,5 +1,33 @@
 ---
-{"id":"algorithm-hawq","title":"HAWQ：用 Hessian 敏感度选择混合精度","type":"algorithm","tags":["mixed-precision","hessian","sensitivity","qat"],"aliases":["HAWQ-I","HAWQ-II","HAWQ-V2","Hessian AWare Quantization"],"related":["algorithm-modelopt-autoquantize","guide-architecture-transfer"],"sources":["paper-hawq2","source-hawq2","code-hawq"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-hawq",
+  "title": "HAWQ：用 Hessian 敏感度选择混合精度",
+  "type": "algorithm",
+  "tags": [
+    "mixed-precision",
+    "hessian",
+    "sensitivity",
+    "qat"
+  ],
+  "aliases": [
+    "HAWQ-I",
+    "HAWQ-II",
+    "HAWQ-V2",
+    "Hessian AWare Quantization"
+  ],
+  "related": [
+    "algorithm-modelopt-autoquantize",
+    "guide-architecture-transfer"
+  ],
+  "sources": [
+    "paper-hawq2",
+    "source-hawq2",
+    "code-hawq"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # HAWQ：用 Hessian 敏感度选择混合精度
@@ -92,4 +120,4 @@ V2 先用相对敏感度约束候选，再在剩余配置里按 $\Omega$ 与大�
 
 需要额外检查 trace 估计对样本与随机向量的稳定性、代理分数与真实单块损失变化的相关性，以及最终全模型质量。如果代理排名不稳定或后端不支持选出的混精模式，停止将分数直接转成部署 Recipe。
 
-来源登记见 [混合精度与架构证据](../../sources/mixed-architecture.md)。与 [ModelOpt AutoQuantize](modelopt-autoquantize.md) 对比时，应区别 Hessian trace 选位宽和输出扰动/Fisher 代理搜索。
+来源登记见 [混合精度与架构证据](../../sources/topics/mixed-architecture.md)。与 [ModelOpt AutoQuantize](modelopt-autoquantize.md) 对比时，应区别 Hessian trace 选位宽和输出扰动/Fisher 代理搜索。

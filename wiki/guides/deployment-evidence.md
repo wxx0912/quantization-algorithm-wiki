@@ -1,5 +1,39 @@
 ---
-{"id":"guide-deployment-evidence","title":"从论文 W4A4 到真实部署证据","type":"guide","tags":["deployment","kernel","performance","validation"],"aliases":["真实加速","性能","fake quant","W4A4 加速","后端支持"],"related":["algorithm-gptq","algorithm-quarot","algorithm-svdquant","guide-architecture-transfer"],"sources":["paper-gptq","paper-quarot","paper-svdquant","repo-nunchaku","paper-viditq","code-viditq"],"updated":"2026-10-23"}
+{
+  "id": "guide-deployment-evidence",
+  "title": "从论文 W4A4 到真实部署证据",
+  "type": "guide",
+  "tags": [
+    "deployment",
+    "kernel",
+    "performance",
+    "validation"
+  ],
+  "aliases": [
+    "真实加速",
+    "性能",
+    "fake quant",
+    "W4A4 加速",
+    "后端支持"
+  ],
+  "related": [
+    "algorithm-gptq",
+    "algorithm-quarot",
+    "algorithm-svdquant",
+    "guide-architecture-transfer"
+  ],
+  "sources": [
+    "paper-gptq",
+    "paper-quarot",
+    "paper-svdquant",
+    "repo-nunchaku",
+    "paper-viditq",
+    "code-viditq"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "mixed",
+  "updated": "2026-10-23"
+}
 ---
 
 # 从论文 W4A4 到真实部署证据

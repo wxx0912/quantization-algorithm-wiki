@@ -1,5 +1,34 @@
 ---
-{"id":"algorithm-flatquant","title":"FlatQuant：可学习可逆变换与块重构","type":"algorithm","tags":["ptq","learned-transform","reconstruction","clipping","w4a4","kv-cache"],"aliases":["FlatQuant","flatness","平坦化"],"related":["algorithm-spinquant","algorithm-omniquant","algorithm-gptq"],"sources":["paper-flatquant","repo-flatquant"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-flatquant",
+  "title": "FlatQuant：可学习可逆变换与块重构",
+  "type": "algorithm",
+  "tags": [
+    "ptq",
+    "learned-transform",
+    "reconstruction",
+    "clipping",
+    "w4a4",
+    "kv-cache"
+  ],
+  "aliases": [
+    "FlatQuant",
+    "flatness",
+    "平坦化"
+  ],
+  "related": [
+    "algorithm-spinquant",
+    "algorithm-omniquant",
+    "algorithm-gptq"
+  ],
+  "sources": [
+    "paper-flatquant",
+    "repo-flatquant"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # FlatQuant：可学习可逆变换与块重构
@@ -61,4 +90,4 @@ FlatQuant 保留归一化后的在线变换，允许不同层使用不同矩阵�
 
 固定数据、位宽、最终量化器，分别移除 clipping、通道缩放、可学习变换，比较块输出误差及最终 PPL；另比较 RTN 与训练后 GPTQ，检验剩余权重误差是否值得额外校准。验证浮点重参数化等价性、逆变换数值稳定性，以及 unfused/fused kernel 数值和端到端时间。AR 结果迁移到 dLLM 需要覆盖 mask 与去噪阶段，并验证输入分布、教师目标和全程生成质量。
 
-来源登记见 [transforms](../../sources/transforms.md)。
+来源登记见 [transforms](../../sources/topics/transforms.md)。

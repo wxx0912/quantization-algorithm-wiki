@@ -1,5 +1,32 @@
 ---
-{"id":"algorithm-awq","title":"AWQ：激活感知的权重量化","type":"algorithm","tags":["ptq","scaling","weight-only","calibration","outlier"],"aliases":["Activation-aware Weight Quantization","激活感知权重量化"],"related":["algorithm-gptq","algorithm-smoothquant","algorithm-autoround"],"sources":["paper-awq","repo-awq"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-awq",
+  "title": "AWQ：激活感知的权重量化",
+  "type": "algorithm",
+  "tags": [
+    "ptq",
+    "scaling",
+    "weight-only",
+    "calibration",
+    "outlier"
+  ],
+  "aliases": [
+    "Activation-aware Weight Quantization",
+    "激活感知权重量化"
+  ],
+  "related": [
+    "algorithm-gptq",
+    "algorithm-smoothquant",
+    "algorithm-autoround"
+  ],
+  "sources": [
+    "paper-awq",
+    "repo-awq"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # AWQ：激活感知的权重量化

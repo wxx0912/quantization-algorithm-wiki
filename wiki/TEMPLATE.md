@@ -1,6 +1,6 @@
 # 算法页面模板
 
-以下头部以真实字段替换后放在算法页面最开始。`related` 只填写已存在的页面 ID，`sources` 必须登记。
+以下头部以真实字段替换后放在算法页面最开始。`related` 只填写已存在的页面 ID，`sources` 必须登记对应来源页。`confidence` 与 `evidence_scope` 取值见 `CONVENTIONS.md` 第 2.5 节。
 
 ```json
 {
@@ -11,6 +11,8 @@
   "aliases": ["中文别名"],
   "related": [],
   "sources": ["paper-name", "repo-name"],
+  "confidence": "source-reported",
+  "evidence_scope": "mixed",
   "updated": "2026-10-23"
 }
 ```

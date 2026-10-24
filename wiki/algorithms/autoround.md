@@ -1,5 +1,34 @@
 ---
-{"id":"algorithm-autoround","title":"AutoRound / SignRound：用符号梯度联合优化舍入与裁剪","type":"algorithm","tags":["ptq","rounding","reconstruction","clipping","llm"],"aliases":["AutoRound","SignRound","SignRoundV1","signed gradient descent"],"related":["algorithm-adaround","algorithm-awq","algorithm-brecq"],"sources":["paper-autoround","repo-autoround"],"updated":"2026-10-23"}
+{
+  "id": "algorithm-autoround",
+  "title": "AutoRound / SignRound：用符号梯度联合优化舍入与裁剪",
+  "type": "algorithm",
+  "tags": [
+    "ptq",
+    "rounding",
+    "reconstruction",
+    "clipping",
+    "llm"
+  ],
+  "aliases": [
+    "AutoRound",
+    "SignRound",
+    "SignRoundV1",
+    "signed gradient descent"
+  ],
+  "related": [
+    "algorithm-adaround",
+    "algorithm-awq",
+    "algorithm-brecq"
+  ],
+  "sources": [
+    "paper-autoround",
+    "repo-autoround"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "source-reported",
+  "updated": "2026-10-23"
+}
 ---
 
 # AutoRound / SignRound：用符号梯度联合优化舍入与裁剪

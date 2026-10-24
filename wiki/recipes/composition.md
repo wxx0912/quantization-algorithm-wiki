@@ -1,5 +1,39 @@
 ---
-{"id":"recipe-composition","title":"算法组合：前提、顺序与统计失效","type":"recipe","tags":["composition","calibration","rotation","scaling"],"aliases":["算法组合","统计失效","重新校准","组合顺序","合法 Recipe"],"related":["algorithm-awq","algorithm-gptq","algorithm-quarot","algorithm-omniquant","algorithm-svdquant"],"sources":["paper-awq","paper-gptq","paper-quarot","paper-omniquant","paper-svdquant"],"updated":"2026-10-23"}
+{
+  "id": "recipe-composition",
+  "title": "算法组合：前提、顺序与统计失效",
+  "type": "recipe",
+  "tags": [
+    "composition",
+    "calibration",
+    "rotation",
+    "scaling"
+  ],
+  "aliases": [
+    "算法组合",
+    "统计失效",
+    "重新校准",
+    "组合顺序",
+    "合法 Recipe"
+  ],
+  "related": [
+    "algorithm-awq",
+    "algorithm-gptq",
+    "algorithm-quarot",
+    "algorithm-omniquant",
+    "algorithm-svdquant"
+  ],
+  "sources": [
+    "paper-awq",
+    "paper-gptq",
+    "paper-quarot",
+    "paper-omniquant",
+    "paper-svdquant"
+  ],
+  "confidence": "source-reported",
+  "evidence_scope": "mixed",
+  "updated": "2026-10-23"
+}
 ---
 
 # 算法组合：前提、顺序与统计失效
