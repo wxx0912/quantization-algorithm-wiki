@@ -13,7 +13,6 @@
   ],
   "read_locator": "摘要、§1（Figure 1）、§3（Eq.1；Eq.2–3）、§4（Figure 2、Step 1–3、Eq.4–5、Algorithm 1）、§5（Table 1–7、Figure 3–4）、§6、附录 A.1（Table 8）、A.2、A.3（Table 9–12）、A.4（Table 13–22）",
   "topic": "core",
-  "requires_external_verification": true,
   "excerpt_sha256": null
 }
 ---
@@ -32,6 +31,8 @@ GPTQ 原始论文（arXiv 2210.17323，v2；同时是 ICLR 2023 会议版）。�
 
 ## 关键事实
 
+以下内容按固定论文版本整理，定位到章节、公式、算法和表格。它们是论文报告，不是本地复现实验结果；引用数字时保留对应实验条件。
+
 - **目标与二阶信息**（§3，Eq.1）：逐层 `argmin_Ŵ ‖WX − ŴX‖²₂`，按输出通道（行）独立并行求解；`H_F = 2X_FX_Fᵀ` 是该层重构目标的二阶信息，不是任务损失 Hessian。
 - **三步实现**（§4，Algorithm 1）：① 固定列顺序（greedy 选点在大层上收益很小）；② 每次处理 `B=128` 列、块内只更新本块、块末再全局更新 `W` 与 `H⁻¹`（不减少计算量，但解掉访存瓶颈）；③ 用 Cholesky kernel 一次性预算 `H⁻¹` 相关信息，dampening 取 `λ = 1% × 平均对角值`。
 - **设置**（§5 Setup）：单张 A100-80GB 量化到 175B；校准集是 C4 的 128 条随机 2048-token 片段；量化格为 uniform per-row asymmetric（min-max），RTN 用同一网格。量化耗时 OPT-175B 4.2h、BLOOM-176B 3.8h。
@@ -40,10 +41,16 @@ GPTQ 原始论文（arXiv 2210.17323，v2；同时是 ICLR 2023 会议版）。�
 - **口径提示**：C4 评测与校准数据同源，论文自己在 caption 里写 "not fully zero-shot"（附录 A.3）；PPL 按不重叠 2048 段、next-token log-prob 指数平均计算（附录 A.2）。
 - **原文内部差异**：OPT-125M 的 FP16 参考 PPL 在 Table 3 记 27.65、Table 8 记 27.66，引用时注明"原文如此"。
 
+### 阅读提示
+
+- `H=2XXᵀ` 描述层输出重构目标的 Hessian，不是完整任务损失 Hessian。
+- 表格数字应连同模型、数据集、位宽、粒度和评测协议一起理解。
+- 论文 kernel 结果只覆盖论文所用硬件、batch 和生成路径，不等于目标 runtime 已支持。
+
 ## 不能推出的结论
 
 - 只覆盖静态权重量化：不做激活量化、不训练，也没有导出格式/packing 与具体推理后端（vLLM/TensorRT-LLM）的集成结论；论文自带的 3-bit kernel 不代表其它后端支持同样粒度。
 - 逐 block 顺序量化，下一个 block 的输入取自**已被量化**的前序 block（顺序耦合），不能据此推断它优化了端到端任务指标。
 - 3.24× 绑定 batch size 1 的生成路径与 HF/accelerate 分层切分（通信 <5%）；论文自己说明大 batch 与非生成场景该 kernel 不直接适用，不能外推为 prefill 或低比特 GEMM 的吞吐。
 - PPL 结论只在论文的模型族、per-row asymmetric min-max 网格与上述评测协议下成立；C4 与校准集同源。
-- 与 OBQ 的对照只在 BERT-base 与 OPT-125M 上做，"GPTQ 接近 OBQ 精度"不能推广到所有模型规模。
+- 与 OBQ 的对照覆盖 ResNet18/50（§5 Table 1）与 BERT-base/OPT-125M（附录 A.1 Table 8），"GPTQ 接近 OBQ 精度"不能推广到所有模型规模。

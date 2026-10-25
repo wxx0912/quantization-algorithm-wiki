@@ -27,7 +27,7 @@ python3 scripts/build_index.py --check
 
 ## 证据和论文阅读顺序
 
-优先阅读可获取的论文 LaTeX 源码，其次是 HTML，PDF 用于补充图表、排版或没有 LaTeX 的内容。来源页记录实际阅读形式、固定论文版本、源码 commit 和已读定位，规范见 `sources/SPEC.md`。
+优先阅读可获取的论文 LaTeX 源码，其次是 HTML，PDF 用于补充图表、排版或没有 LaTeX 的内容。来源页记录实际阅读形式、固定论文版本、源码 commit 和已读定位。
 
 回答时区分：
 

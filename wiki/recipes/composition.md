@@ -28,11 +28,12 @@
     "paper-gptq",
     "paper-quarot",
     "paper-omniquant",
-    "paper-svdquant"
+    "paper-svdquant",
+    "paper-adaround"
   ],
   "confidence": "source-reported",
   "evidence_scope": "mixed",
-  "updated": "2026-10-23"
+  "updated": "2026-10-24"
 }
 ---
 

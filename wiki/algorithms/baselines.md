@@ -29,54 +29,41 @@
     "paper-omniquant"
   ],
   "confidence": "source-reported",
-  "evidence_scope": "source-reported",
-  "updated": "2026-10-23"
+  "evidence_scope": "mixed",
+  "updated": "2026-10-24"
 }
 ---
 
 # 基础基线：RTN 与范围校准
 
-## 它们分别决定什么
+## 一句话理解
 
-MinMax/AbsMax 选择可表示的数值范围，MSE 校准根据误差选择范围，RTN 在给定网格上选择最近格点。它们不是互斥的完整算法：可以先用 MSE 选择 clipping 范围，再做 RTN。GPTQ 也需要量化网格，但额外改变尚未量化的权重以补偿误差。
+MinMax、AbsMax 和 MSE 范围搜索决定量化网格；RTN 在给定网格上取最近格点。它们可以组合，例如 MSE 范围搜索后再 RTN，而不是四个互斥的完整量化算法。
 
-## MinMax 与 affine 量化
+## 核心机制
 
-对一组非恒定数值，令范围 `[l,u]` 包含零，整数码范围 `[q_min,q_max]`：
+对均匀 affine 整数量化，步长为 $s$、整数零点为 $z$：
 
-$$s=\frac{u-l}{q_{max}-q_{min}},\quad z=\operatorname{clip}\left(\operatorname{round}(q_{min}-l/s),q_{min},q_{max}\right),$$
-$$q=\operatorname{clip}(\operatorname{round}(x/s)+z,q_{min},q_{max}),\qquad \widehat x=s(q-z).$$
+$$q=\mathrm{clip}(\mathrm{round}(x/s)+z,q_{min},q_{max}),\qquad\hat x=s(q-z).$$
 
-RTN 只做取最近整数和截断。`z` 是整数零点，不能在反量化时漏掉。零范围/恒定组需要实现明确处理，不能直接除以零；四舍五入的 tie-breaking、scale dtype 和零点存储方式也必须进入部署契约。
+- **MinMax**：用组内极值确定范围，affine 编码通常需包含零。
+- **AbsMax**：用最大绝对值定义对称范围；具体整数端点依实现而定。
+- **MSE 范围搜索**：枚举裁剪范围，选择量化反量化后误差最小的候选；通常按平方误差，实现也可能换用其它误差指数（见下方 caveat）。
+- **RTN**：执行最近舍入和饱和截断，不做跨权重误差补偿。
 
-MinMax 使用样本极值；weight-only 可直接读取权重而无需输入数据，但激活的静态 MinMax 需要校准数据。动态量化则对当前 token、tensor 或 block 求范围，增加在线统计开销。
+## 基本流程与条件
 
-## AbsMax 与对称网格
+固定整数格式、分组轴和范围规则 → 收集权重或激活统计 → 确定 scale/zero-point → 舍入与反量化检查 → 评估任务质量。
 
-令 `a=max|x|`。一种常见 signed 对称约定使用 `[-Q,Q]`，`s=a/Q`、`z=0`；INT4 常取 `Q=7`，其舍入与截断不一定使用全部 16 个码。另一实现可能使用 unsigned 偏移码和非完全对称端点，不能仅凭“symmetric”字符串判断二者数值一致。
+静态激活范围需要校准，动态范围从当前输入计算；weight-only MinMax+RTN 可直接读取权重。恒定组、tie-breaking 和 scale dtype 按量化器实现处理。更细粒度增加元数据和部署约束，不能只看 bit 数。
 
-具体例子：GPTQ 固定源码 `quant.py` 的 `sym=True` 采用 `maxq=2^b-1`、中点零点与自己的范围规则；QuaRot 论文描述的 INT4 激活按最大值除以 7。共享 bit 数不意味着码本、rounding 和边界完全相同。
+## 结果边界
 
-## MSE 范围搜索
+- 公式适用于均匀整数量化，不能直接套到 FP4、FP8 等非均匀码本。
+- 名为 `mse` 的实现未必使用平方误差：GPTQ `Quantizer` 默认误差指数为 2.4。
+- 局部 tensor MSE 低不保证最终任务质量高；范围搜索也不保证全局最优。
+- 工程上应在同模型、同格式、同数据和同评测协议下比较基础基线与更复杂方法。
 
-枚举候选 clipping 范围 `[l_c,u_c]`，构造每个候选网格并反量化：
+## Agent 如何使用
 
-$$c^*=\arg\min_c\frac1N\sum_i(x_i-\widehat x_i(c))^2.$$
-
-缩小范围能降低步长和主体舍入误差，却增加尾部截断误差。候选可由极值的收缩比例或其他明确规则产生；离散网格搜索只在指定候选集合中选择，不保证全局最优。
-
-输入为权重或激活样本，输出为每组 scale/zero-point/clipping。成本约为候选数乘样本元素数；不需要梯度。若优化的是 block 输出 MSE，必须明确改变了目标和评估成本，不能继续称为单纯 tensor 范围 MSE。
-
-**源码名称陷阱：** [GPTQ quant.py，2d65066](https://github.com/IST-DASLab/gptq/blob/2d65066eeb06a5c9ff5184d8cebdf33662c67faf/quant.py) 的 `mse=True` 实际累积 `|error|^norm`，默认 `norm=2.4`。只有显式取 2 才是严格平方误差；默认并非数学意义上的 MSE。`grid=100`、`maxshrink=.8` 控制离散候选，不能泛化成所有 MSE 校准的定义。
-
-## 粒度与适用性
-
-per-tensor 一个 scale，per-channel 每个指定通道一组，group-wise 在约定轴上分组。更细粒度通常降低量化误差，但增加元数据和 kernel 约束。粒度必须写明轴与布局，如 Linear `[out,in]` 的“每个输出行，沿输入轴 group 128”。仅写 group size 不够。
-
-本文公式对应均匀整数网格。FP8、FP4 的可表示集合并非均匀整数网格，不能机械套用 `z` 和 INT4 边界；应单独记录具体浮点格式、缩放层级和 kernel。
-
-## 基线实验与局限
-
-GPTQ v2 Table 11 的 OPT-175B/C4，4-bit 相同 per-row 网格下 RTN perplexity 11.61、GPTQ 10.28、FP16 10.13。这是 RTN 在该任务中的比较，不是普遍失败证明。SmoothQuant v7 Table 2–4 展示激活粒度/静态性对 W8A8 结果的影响；OmniQuant v3 Eq.2 展示学习 clipping 如何从 MinMax 出发。
-
-Agent 应先固定格式、粒度、排除模块和评测协议，比较 MinMax+RTN 与范围搜索+RTN，再加入更复杂方法。只看权重 MSE 不能判定最终生成质量；输入分布变化、旋转或缩放后应重新估计受影响范围。本项目只核对公式和源码，不提供真实模型量化结果。
+使用本页建立可解释基线。量化器公式与范围搜索实现见 [GPTQ 源码](../../sources/repos/repo-gptq.md)；RTN 论文对比见 [GPTQ 论文](../../sources/papers/paper-gptq.md)；静态/动态粒度见 [SmoothQuant](../../sources/papers/paper-smoothquant.md)，学习 clipping 见 [OmniQuant](../../sources/papers/paper-omniquant.md)。本库没有运行模型基线实验。

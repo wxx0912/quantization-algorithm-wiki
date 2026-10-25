@@ -12,7 +12,6 @@
   ],
   "read_locator": "源码包内 ms.tex 全文（正文 + \\appendix 之后的三节附录）、ms.tex:320 的 Eq.1、tab:main_vbench / tab:main_ucf / tab:main_quant_comparison / tab:ablation、ms.tex:621 的 fig:hardware 内嵌表格、ms.tex:488 的 fig:main_images 内嵌表格、figs/ 目录清单",
   "topic": "mixed-architecture",
-  "requires_external_verification": true,
   "excerpt_sha256": null
 }
 ---

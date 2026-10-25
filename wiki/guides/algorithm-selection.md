@@ -25,14 +25,20 @@
   ],
   "sources": [
     "paper-awq",
+    "repo-awq",
     "paper-gptq",
     "paper-smoothquant",
     "paper-quarot",
-    "paper-omniquant"
+    "paper-omniquant",
+    "paper-adaround",
+    "paper-autoround",
+    "paper-flatquant",
+    "paper-spinquant",
+    "paper-svdquant"
   ],
   "confidence": "source-reported",
   "evidence_scope": "mixed",
-  "updated": "2026-10-23"
+  "updated": "2026-10-24"
 }
 ---
 

@@ -13,7 +13,6 @@
   ],
   "read_locator": "摘要、§1（Figure 1–2）、§2（Eq.1、Figure 3–4）、§3（Eq.2、Table 1）、§4（Eq.3–4、Figure 5–6）、§5.1–5.5（Table 2–11、Figure 7–10）、§6–7、附录 A",
   "topic": "core",
-  "requires_external_verification": true,
   "excerpt_sha256": null
 }
 ---
@@ -35,10 +34,11 @@ SmoothQuant（ICML 2023 论文；本页读 arXiv v7，2024-03-29，在会议版�
 - **量化器**（§2，Eq.1）：对称均匀 INT8，`Δ = max(|X|)/(2^{N−1}−1)`；按统计来源分 static/dynamic，按粒度分 per-tensor / per-token（激活）/ per-channel（权重）/ group-wise。
 - **核心约束与观察**（§3，Eq.2、Table 1）：硬件 GEMM 只允许在矩阵乘的外层维度缩放，所以激活只能用 per-token；三条观察是"权重好量化""激活异常值比常规值大约 100×""异常值固定在少数通道上"。Table 1 显示只有 per-channel 激活量化能保住精度，但它与 INT8 GEMM 不兼容（原表标灰）。
 - **等价变换与迁移强度**（§4，Eq.3–4）：`s_j = max(|X_j|)^α / max(|W_j|)^{1−α}`；`s` 可离线融合进前一层、不新增 kernel 调用。**α=0.5** 对 OPT/BLOOM 通用，**α=0.75** 用于异常值更严重的 GLM-130B。
+- **等价变换的落地范围**（§4）：`s` 可离线融合进前一层（线性层、归一化等）；当输入来自残差 add 时，需要对残差分支额外缩放（沿用 Outlier Suppression 的做法）。
 - **校准口径**（§5.1）：smoothing 因子与 static 量化步长一次性用 Pile 的 512 条随机句子标定，α 在 Pile 验证集上做 grid search；同一个量化模型用于全部下游任务。
-- **量化档位**（§5.1，Table 2）：SmoothQuant 提供 O1（per-tensor 权重 + per-token dynamic 激活）、O2（再加 per-tensor dynamic）、O3（再加 per-tensor static）三档，O1→O3 效率递增。
-- **主结果**（§5.2，Table 3–4）：OPT-175B 七任务平均 66.9%（FP16）→ O1 66.5%；BLOOM-176B 68.2% → O2 68.4%；GLM-130B 73.8% → O1 73.7%。同表的 W8A8/ZeroQuant/Outlier Suppression 全部接近随机、PPL 爆炸，LLM.int8() 保精度但延迟更高。
-- **加速与显存**（§5.3）：PyTorch-HF 单卡最高 1.51× 加速、1.96× 显存节省；FasterTransformer 单卡最高 1.56×，并把 OPT-66B 从 2 卡降到 1 卡、175B 从 8 卡降到 4 卡；全部实验在 A100 80GB。MT-NLG 530B（Table 9–10）精度不变（73.1%），显存 1040GB→527GB、16→8 卡。
+- **量化档位**（§5.1，Table 2）：SmoothQuant 提供 O1（per-tensor 权重 + per-token dynamic 激活）、O2（per-tensor 权重 + per-tensor dynamic 激活）、O3（per-tensor 权重 + per-tensor static 激活）三档，O1→O3 效率递增。已对照 v7 LaTeX `fig_text/tab_settings.tex`；后续 Table 7（`tab_more_models.tex`）的 Llama-2/Falcon/Mistral/Mixtral 使用 per-channel 权重、per-token 激活，应与 Table 2 分开。
+- **主结果**（§5.2，Table 3–4）：OPT-175B 七任务平均 66.9%（FP16）→ O1 66.5%；BLOOM-176B 68.2% → O2 68.4%；GLM-130B 73.8% → O1 73.7%。OPT-175B（Table 3）上同表的 W8A8/ZeroQuant/Outlier Suppression 平均跌到 35–36%、WikiText PPL 涨到 8.5e4–9.6e4；但 Table 4 的基线表现随模型而异——BLOOM-176B 掉得少（W8A8 64.2%、ZeroQuant 67.4%、Outlier Suppression 54.1%，FP16 68.2%），GLM-130B 则接近随机（W8A8 26.9%、ZeroQuant 26.7%、Outlier Suppression 63.5%，FP16 73.8%），PPL 爆炸只出现在 Table 3。LLM.int8() 保精度但延迟更高。
+- **加速与显存**（§5.3–5.4）：PyTorch-HF 单卡最高 1.51× 加速、1.96× 显存节省；FasterTransformer 单卡最高 1.56×，并把 OPT-66B 从 2 卡降到 1 卡、175B 从 8 卡降到 4 卡；全部实验在 A100 80GB。MT-NLG 530B（Table 9–10）精度不变（73.1%），显存 1040GB→527GB、16→8 卡。
 - **实现契约**（§5.1）：两个后端（PyTorch HuggingFace 概念验证、FasterTransformer 生产），线性层与 bmm 用 CUTLASS INT8 GEMM，其余算子保持 FP16。
 
 ## 不能推出的结论

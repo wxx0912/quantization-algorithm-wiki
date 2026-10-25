@@ -13,7 +13,6 @@
   ],
   "read_locator": "摘要、§1（Eq.1–2）、§2 Approach（2.1 Probabilistic Formulation，Eq.3–4；2.2 Pre-training；2.3 SFT，Eq.5；2.4 Inference，Eq.6）、附录 A Formulation（Training/Inference/Algorithms，Algorithm 1–5、Eq.7–16、Figure 4）、附录 B.2 Architectures and Scaling Experiments（Table 5）；编号口径正文 Eq.1–6、Figure 1–3、Table 1–4，附录 Eq.7–16、Figure 4–5、Table 5–14、Algorithm 1–5",
   "topic": "mixed-architecture",
-  "requires_external_verification": true,
   "excerpt_sha256": null
 }
 ---

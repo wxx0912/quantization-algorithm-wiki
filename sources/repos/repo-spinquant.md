@@ -6,13 +6,12 @@
   "url": "https://github.com/facebookresearch/SpinQuant/tree/8f47aa3f00e8662caf1a484153920a07e5281c3a",
   "version": "8f47aa3f00e8662caf1a484153920a07e5281c3a",
   "version_kind": "commit",
-  "retrieved_at": "2026-10-23",
+  "retrieved_at": "2026-10-24",
   "read_form": [
     "repo-tree"
   ],
   "read_locator": "optimize_rotation.py: train；train_utils/optimizer.py: Cayley_loop、SGDG；ptq.py: train",
   "topic": "transforms",
-  "requires_external_verification": true,
   "excerpt_sha256": null
 }
 ---
@@ -25,7 +24,7 @@ SpinQuant 官方实现，用于核对旋转参数的构造、约束优化实现�
 
 ## 已读定位与阅读形式
 
-固定 commit 下读取 GitHub 原始文件，未克隆运行。
+本轮读取固定 commit 的 GitHub 源码归档，核对归档根目录所标 commit 与本页版本一致；静态读取所列函数，未运行。
 
 ## 关键事实
 

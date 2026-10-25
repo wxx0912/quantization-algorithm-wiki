@@ -6,13 +6,12 @@
   "url": "https://github.com/ruikangliu/FlatQuant/tree/9d88ffcb7d2c6bda59fb5c44dad36adc101aadb1",
   "version": "9d88ffcb7d2c6bda59fb5c44dad36adc101aadb1",
   "version_kind": "commit",
-  "retrieved_at": "2026-10-23",
+  "retrieved_at": "2026-10-24",
   "read_form": [
     "repo-tree"
   ],
   "read_locator": "flatquant/trans_utils.py: SVDSingleTransMatrix、SVDDecomposeTransMatrix；flatquant/train_utils.py: cali_flat_quant；flatquant/flat_linear.py: FlatQuantizedLinear、reparameterize；README、REALQUANT.md",
   "topic": "transforms",
-  "requires_external_verification": true,
   "excerpt_sha256": null
 }
 ---
@@ -25,7 +24,7 @@ FlatQuant 官方实现，用于核对变换的参数化与逆变换、块训练�
 
 ## 已读定位与阅读形式
 
-固定 commit 下读取 GitHub 原始文件与仓库文档，未克隆运行。
+本轮读取固定 commit 的源码归档及仓库文档，归档顶层目录确认版本；静态阅读，未执行训练。
 
 ## 关键事实
 
@@ -39,3 +38,7 @@ FlatQuant 官方实现，用于核对变换的参数化与逆变换、块训练�
 - fake-quant 路径不能证明整数 GEMM 或真实低比特加速。
 - README 的能力声明不替代执行验证；源码含晚于论文 v1 的模型支持，两类证据需分开。
 - 未运行训练、导出或 GPU 测试。
+
+## 实现补充
+
+`cali_flat_quant` 的量化块输入来自 `fp_inps`，每块完成后交换 `fp_inps, fp_outs`，不能写成始终使用前块量化输出。训练先算 MSE，再执行 `loss / loss.clone().detach()`，因此实际梯度带有按当前损失归一化的因子。`SVDSingleTransMatrix`/`SVDDecomposeTransMatrix` 用 Cayley 正交参数化和可学习对角参数；`inv_t` 路径构造逆转置，不能将其名称省略成无转置的逆矩阵。`FlatQuantizedLinear.reparameterize` 固化变换后权重，真实低位执行另见 `REALQUANT.md`。工程上仍需检查近零对角参数的数值稳定性。

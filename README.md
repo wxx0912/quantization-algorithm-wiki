@@ -12,7 +12,7 @@ v0.1 已收录 14 篇算法与基线页面，覆盖 RTN/范围校准、GPTQ、Ad
 - [完整页面与标签索引](index.generated.md)：由页面元数据生成。
 - [量化术语与数值契约](wiki/foundations/quantization-contract.md)。
 - [Agent 入口](SKILL.md)：何时使用、查询路径、证据边界与输出契约。
-- [来源层入口](sources/README.md) 与[来源页规范](sources/SPEC.md)、[页面模板](wiki/TEMPLATE.md)、[维护约定](CONTRIBUTING.md)。
+- [来源层入口](sources/README.md)。
 
 与 [Model Architecture Wiki](https://github.com/wxx0912/model-architecture-wiki) 协作：结构库描述组件和计算路径，本库描述算法如何作用于这些组件及其证据边界。先取得具体结构和诊断信息，再检索本库；不能由模型名称自动确定最佳量化方法。
 
@@ -39,6 +39,6 @@ python3 scripts/build_index.py --check
 python3 scripts/check_shared.py --peer ../model-architecture-wiki
 ```
 
-校验覆盖页面元数据、ID、引用关系、本地链接及基础标题锚点；不验证外网可达性或算法正确性。内容仍需核对原论文与官方源码。来源阅读优先 LaTeX 源码，其次 HTML，必要时补看 PDF；已完成的 HTML 阅读按实际记录，不改写为已读 LaTeX。`check_shared.py` 比对两库共享文件（`CONVENTIONS.md`、`sources/SPEC.md`、`scripts/`）的哈希，改共享文件须同步两库。
+校验覆盖页面元数据、ID、引用关系、本地链接及基础标题锚点；不验证外网可达性或算法正确性。内容仍需核对原论文与官方源码。来源阅读优先 LaTeX 源码，其次 HTML，必要时补看 PDF；已完成的 HTML 阅读按实际记录，不改写为已读 LaTeX。`check_shared.py` 比对两库共享脚本（`scripts/`）的哈希，改共享脚本须同步两库。
 
 后续优先补齐文本 dLLM 的直接量化证据、目标后端的具体适配与真实实验案例。当前没有数据库、向量服务、量化执行器或自动兼容判定器。

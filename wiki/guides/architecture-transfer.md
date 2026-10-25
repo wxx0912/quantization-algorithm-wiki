@@ -22,6 +22,8 @@
     "生成过程量化"
   ],
   "related": [
+    "algorithm-qdit",
+    "algorithm-dllmquant",
     "algorithm-hawq",
     "algorithm-modelopt-autoquantize",
     "algorithm-awq",
@@ -37,7 +39,7 @@
   ],
   "confidence": "source-reported",
   "evidence_scope": "mixed",
-  "updated": "2026-10-23"
+  "updated": "2026-10-24"
 }
 ---
 
@@ -81,7 +83,7 @@ D=\operatorname{diag}(s),\quad
 s_i=\frac{\max|X_i|^\alpha}{\max|W_i|^{1-\alpha}}.
 $$
 
-这个等价关系在量化前成立；分别量化两侧后不保证相同误差。§3.2.3 根据生成阶段把流程分为两半，使用不同的 $\alpha$。必须对应保存/选择权重变换与激活变换；不能仅在 runtime 改激活除数而沿用不匹配的权重。论文报告在其试验中少于 20 次 PTQ、少于 1 GPU 小时可选到有效 $\alpha$，不是对任意 DiT 的通用预算。
+这个等价关系在量化前成立；分别量化两侧后不保证相同误差。§3.2.3 根据生成阶段把流程分为两半，使用不同的 $\alpha$。必须对应保存/选择权重变换与激活变换；不能仅在 runtime 改激活除数而沿用不匹配的权重。论文报告在其试验中 20 次 PTQ 以内（$<$1 GPU 小时）可选到有效 $\alpha$，不是对任意 DiT 的通用预算。
 
 动态量化消除了固定激活范围的一部分失配，但**没有消除离线校准需求**：通道平衡与混精计划仍基于校准数据。原文离线计划与 runtime 动态 scale 是两个不同状态。
 
@@ -108,13 +110,13 @@ Table 1 的 STDiT/OpenSORA VBench 结果摘录如下，保留多维指标，不�
 
 ### 论文与当前官方实现不同
 
-锁定官方仓库 commit [`a8add8be17ad91069aba7a7209aa88e04b2fe41e`](https://github.com/A-suozhang/ViDiT-Q/tree/a8add8be17ad91069aba7a7209aa88e04b2fe41e)。README 说明 2025-01 重组代码并新增 CUDA kernel 与端到端路径，旧实现保留在 `viditq_old`。本页没有执行这些路径，也不把 2025 代码支持反写为 2024 v2 论文证据。
+锁定官方仓库 commit [`a8add8be17ad91069aba7a7209aa88e04b2fe41e`](https://github.com/A-suozhang/ViDiT-Q/tree/a8add8be17ad91069aba7a7209aa88e04b2fe41e)。README 说明 2025-01 重组代码并新增 CUDA kernel 与端到端路径，旧实现保留在 `viditq_old` 分支。本页没有执行这些路径，也不把 2025 代码支持反写为 2024 v2 论文证据。
 
 已读具体入口：
 
 - [`quant_utils/qdiff/base/base_quantizer.py`](https://github.com/A-suozhang/ViDiT-Q/blob/a8add8be17ad91069aba7a7209aa88e04b2fe41e/quant_utils/qdiff/base/base_quantizer.py)：`DynamicQuantizer` 在线沿二维输入每一行计算 min/max 或 absmax，并返回反量化值；这条 Python 路径是伪量化。
 - [`quant_utils/qdiff/viditq/viditq_quant_layer.py`](https://github.com/A-suozhang/ViDiT-Q/blob/a8add8be17ad91069aba7a7209aa88e04b2fe41e/quant_utils/qdiff/viditq/viditq_quant_layer.py)：把输入 reshape 为 `[B*N_token,C]`，实现逐 token 激活范围。当前类还加入 Hadamard 旋转，不能称为论文 Eq. (1) 的逐行复现。
-- 当前 `channel_mask = weight_max**alpha / act_max**(1-alpha)`（源码为 `weight_mask.abs()**alpha / act_mask.abs()**(1-alpha)`，对 mask 取 `.abs()` 后负值取幂得 NaN），输入乘 mask、权重除 mask；相对论文记号，需要同时考虑倒数与 $\alpha\leftrightarrow1-\alpha$，不能照搬论文超参数值。
+- 当前源码实现为 `weight_mask.abs()**alpha / act_mask.abs()**(1-alpha)`，输入乘 mask、权重除 mask；这与论文记号的倒数方向和 $\alpha\leftrightarrow1-\alpha$ 约定需要逐项对齐。源码中的 `abs()` 会先消除负值影响，但零值、极小值和幂运算的数值稳定性仍需检查，不能照搬论文超参数值。
 - README 区分 `software_simulation` 和 `hardware` 配置；后者导出整数权重并使用扩展 kernel。是否覆盖目标模型与所有混精模式，仍需实际配置和运行验证。
 
 ### 对 Agent 的可迁移启发
@@ -147,4 +149,4 @@ Table 1 的 STDiT/OpenSORA VBench 结果摘录如下，保留多维指标，不�
 
 只有代数等价、或只有相近架构的论文分数时，状态应为“候选迁移”。至少在目标计算图、数据状态、格式/后端和完整生成指标上完成验证，才标记为目标场景可执行。若某一步变换改变了统计坐标或生成轨迹，重采相关统计；如果性能仅有估算，保留“估算”标签而不写加速承诺。
 
-相关：[AutoQuantize](../algorithms/modelopt-autoquantize.md)、[HAWQ](../algorithms/hawq.md)、[来源登记](../../sources/topics/mixed-architecture.md)。
+相关：[AutoQuantize](../algorithms/modelopt-autoquantize.md)、[HAWQ](../algorithms/hawq.md)、生成过程的直接量化见 [Q-DiT](../algorithms/qdit.md)（图像 DiT）与 [DLLMQuant](../algorithms/dllmquant.md)（文本 dLLM）、[来源登记](../../sources/topics/mixed-architecture.md)。

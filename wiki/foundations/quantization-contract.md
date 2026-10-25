@@ -21,16 +21,21 @@
   "related": [
     "algorithm-baselines",
     "algorithm-gptq",
-    "algorithm-quarot"
+    "algorithm-quarot",
+    "foundation-number-formats"
   ],
   "sources": [
     "repo-gptq",
+    "paper-gptq",
     "paper-quarot",
-    "paper-smoothquant"
+    "paper-smoothquant",
+    "paper-awq",
+    "paper-svdquant",
+    "code-modelopt-autoquantize"
   ],
   "confidence": "source-reported",
   "evidence_scope": "mixed",
-  "updated": "2026-10-23"
+  "updated": "2026-10-24"
 }
 ---
 
@@ -52,7 +57,7 @@
 | group size | 共用参数的元素数量 | 轴、tensor layout、padding、分组与排列顺序 |
 | PTQ / QAT | 从已有模型进行量化优化 / 将量化纳入训练 | 还需说明训练哪些参数、数据量、损失和预算；有梯度不等于全模型训练 |
 
-INT4、FP8、NVFP4 等描述格式体系；GPTQ、AWQ 描述优化方法；ModelOpt 是工具体系；AutoQuantize 是配置搜索接口。不能把它们作为同一列可自由替换的算法。
+INT4、FP8、NVFP4 等描述格式体系（见 [数值格式](number-formats.md)）；GPTQ、AWQ 描述优化方法；ModelOpt 是工具体系；AutoQuantize 是配置搜索接口。不能把它们作为同一列可自由替换的算法。
 
 ## 三种容易混淆的产物
 

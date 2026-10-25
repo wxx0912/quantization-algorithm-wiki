@@ -10,9 +10,8 @@
   "read_form": [
     "pdf"
   ],
-  "read_locator": "摘要、§1（Figure 1）、§2（Assumption 1、Lemma 1、Eq.(1)–(10)；Figure 2 在 §2.1、Figure 3 在 §2.2、Figure 4 在 §2.3）、§3.1（Figure 5；正文交叉引用 Table 4 在附录 C）、§3.2（Table 1）、§3.3（Table 2）、§3.4（Table 3）、§4；Table 1/2/3 经 PDF 第 8/9 页文本抽取与页面图像双重核对",
+  "read_locator": "摘要、§1（Figure 1）、§2（Assumption 1、Lemma 1、Eq.(1)–(10)；Figure 2 在 §2.1、Figure 3 在 §2.2、Figure 4 在 §2.3）、§3.1（Figure 5；正文交叉引用 Table 4 在附录 C）、§3.2（Table 1）、§3.3（Table 2）、§3.4（Table 3）、§4；Table 1/2/3 经 PDF 第 8/9 页文本抽取与页面图像双重核对、附录经同页 Supplemental.pdf 核对（Appendix B/C/D/E；Table 4 在附录 C、Table 5 在附录 D、Figure 6–8）",
   "topic": "mixed-architecture",
-  "requires_external_verification": true,
   "excerpt_sha256": null
 }
 ---
@@ -26,13 +25,13 @@ HAWQ-V2 的正式会议版（NeurIPS 2020），给出用平均 Hessian trace 与
 
 ## 已读定位与阅读形式
 
-- 阅读形式：NeurIPS 官方 PDF（正文 12 页，含参考文献，**不含附录**）；第 8/9 页的 Table 1–3 另用页面图像逐格目视复核，正文其余部分通过 PDF 文本抽取阅读。
-- 定位：§1 Introduction（Figure 1）、§2 Methodology（Assumption 1、Lemma 1、Eq.(1)–(10)；Figure 2–4 分属 §2.1–2.3）、§3 Empirical Results（3.1 Hutchinson trace 估计 Figure 5、3.2 Table 1、3.3 Table 2、3.4 Table 3）、§4 Conclusions。编号：正文 Eq.(1)–(10)、Figure 1–5、Table 1–3；附录（Table 4 在附录 C、Table 5 在附录 D、Figure 6–8）仅由正文交叉引用推知，**未读到附录本体**。
+- 阅读形式：NeurIPS 官方 PDF（正文 12 页，含参考文献，不含附录）；附录本体取自同一页链接的 Supplemental.pdf，同样以 PDF 文本抽取阅读；第 8/9 页的 Table 1–3 另用页面图像逐格目视复核。
+- 定位：§1 Introduction（Figure 1）、§2 Methodology（Assumption 1、Lemma 1、Eq.(1)–(10)；Figure 2–4 分属 §2.1–2.3）、§3 Empirical Results（3.1 Hutchinson trace 估计 Figure 5、3.2 Table 1、3.3 Table 2、3.4 Table 3）、§4 Conclusions。编号：正文 Eq.(1)–(10)、Figure 1–5、Table 1–3；附录（Table 4 在附录 C、Table 5 在附录 D、Figure 6–8 在附录 C）经 Supplemental.pdf 核实，正文的交叉引用成立。
 
 ## 关键事实
 
-- **敏感度定义与排序**（§2、Eq.(4)–(10)）：在 Assumption 1（模型二次可微且收敛）下由 Lemma 1 给出，比"最大 Hessian 特征值"更好的度量是**平均 Hessian trace**：`Ω_i = Tr(H_i)·‖ΔW_i‖²`，整网按 `Ω(b)=Σ_i Ω_i` 排序、取扰动最小的一组。`Tr(H_i)` 对参数量归一化，否则大层仅因参数多就显得更敏感。
-- **trace 的估计**（§3.1、Figure 5）：用 Hutchinson 算法（矩阵无关）近似，不显式构造大矩阵；约 **512 个数据点**之后 trace 收敛、**50 次 Hutchinson 迭代**即足够，4 张 GPU 上 **30 分钟**内算完 ResNet50 的 **54 个 block**（平均 33s/block）；相对基于搜索的方法最高快 **120×**（Table 4，附录 C）。
+- **敏感度定义与排序**（§2、Eq.(4)–(10)）：在 Assumption 1 下由 Lemma 1 给出，比"最大 Hessian 特征值"更好的度量是**平均 Hessian trace**：`Ω_i = [Tr(H_i)/n_i]·‖ΔW_i‖²`（`n_i` 为第 i 层权重维度；论文 §2 的 Ω 定义，写作 `overline{Tr}(H_i)`），整网按 `Ω(b)=Σ_i Ω_i` 排序、取扰动最小的一组。`Tr(H_i)` 对参数量归一化，否则大层仅因参数多就显得更敏感。Assumption 1 的完整条件不止“二次可微且收敛”：还要求收敛到满足一阶/二阶最优条件的局部极小（梯度为零、Hessian 半正定），量化感知微调扰动 `ΔW_i*` 沿 `H_i` 的每个正交特征向量具有同一系数 `α_bit`，且泰勒展开的三阶项 `‖∇³L/∇W_i³‖·‖ΔW_i*‖³/6` 足够小；Lemma 1 另要求被比较的两层扰动范数相同。缺这些条件时，“平均 trace 更好”不能当作无条件结论。
+- **trace 的估计**（§3.1、Figure 5）：用 Hutchinson 算法（矩阵无关）近似，不显式构造大矩阵；约 **512 个数据点**之后 trace 收敛、**50 次 Hutchinson 迭代**即足够，4 张 GPU 上 **30 分钟**内算完 ResNet50 的 **54 个 block**（平均 33s/block）；相对基于搜索的方法最高快 **120×**（会议版 §3.1 正文转引附录 C 的 Table 4，该表已由 Supplemental.pdf 核对）。
 - **ImageNet 结果**（§3.2、Table 1）：ResNet50 FP32 77.39%/97.8 MB → HAWQ-V2（2-bit 权重 + 4-bit 激活混精）**75.92%**/7.99 MB；InceptionV3 77.45%/91.2 MB → **75.98%**/7.57 MB；SqueezeNext 69.38%/10.1 MB → **68.68%**/1.07 MB。表注明确 `MP` 表示该混精配置里**最低**的位宽。
 - **检测结果**（§3.3、Table 2；RetinaNet-ResNet50，MS COCO）：FP32 基线 35.6 mAP/145 MB；Direct 4-bit 31.5 mAP；HAWQ-V2 3-bit 权重混精 + 4-bit 激活 **34.1 mAP**/17.90 MB，激活也混精得 **34.4 mAP**、激活提到 6-bit 得 **34.8 mAP**；论文指出检测任务对激活量化更敏感。
 - **消融**（§3.4、Table 3；SqueezeNext）：(a) "总扰动大" 67.46%/1.09 MB vs "总扰动小（HAWQ-V2）" **68.68%/1.07 MB**；(b) 只用 `‖ΔW‖²` 的 L2 敏感度 67.83%/1.10 MB，加平均 Hessian trace 后 **68.68%/1.07 MB**（论文称 trace 版本高 0.85% 且模型更小）。

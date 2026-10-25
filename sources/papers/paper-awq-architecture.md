@@ -13,7 +13,6 @@
   ],
   "read_locator": "§5.1 Settings、§5 开头（Table 4–5 浮动体）、§5.2 Evaluation（Table 4–5 讨论、Table 6 OpenFlamingo、Table 7 VILA、Table 8 码/数学、Figure 5 Vicuna、Figure 6–7 定性）、§5.4 Speedup（Table 10 VILA latency）；编号口径 Table 1–10、Figure 1–10、Eq.1–5（`S3.T1`–`S3.T3`、`S5.T4`–`S5.T10`、`S1.F1`–`S1.F2`、`S3.F3`、`S4.F4`、`S5.F5`–`S5.F10`、`S3.E1`–`S3.E5`）",
   "topic": "mixed-architecture",
-  "requires_external_verification": true,
   "excerpt_sha256": null
 }
 ---

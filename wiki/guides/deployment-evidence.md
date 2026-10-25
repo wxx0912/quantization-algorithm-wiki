@@ -32,7 +32,7 @@
   ],
   "confidence": "source-reported",
   "evidence_scope": "mixed",
-  "updated": "2026-10-23"
+  "updated": "2026-10-24"
 }
 ---
 
@@ -55,9 +55,9 @@
 
 **QuaRot**：Linear 使用 INT4 Tensor Core，但 KV 读入后反量化做 FP16 attention 点积。§5.2 的速度以单 Transformer block 测量，原因是整模型在大 batch 下放不进测试设备。
 
-**SVDQuant/Nunchaku**：低秩分支能帮助精度，但普通实现可能引入额外访存。论文用融合把低秩 down 与激活量化、低秩 up 与低比特 GEMM 衔接。当前 Nunchaku 的静态调用链提供实现证据，仍不能替代目标设备的实际运行与计时。[SVDQuant §4.3](https://arxiv.org/html/2411.05007v1)
+**SVDQuant/Nunchaku**：低秩分支能帮助精度，但普通实现可能引入额外访存。论文用融合把低秩 down 与激活量化、低秩 up 与低比特 GEMM 衔接。当前 Nunchaku 的静态调用链提供实现证据，仍不能替代目标设备的实际运行与计时。[SVDQuant §4.3](https://arxiv.org/html/2411.05007v1#S4.SS3)
 
-**ViDiT-Q 的版本反例**：论文 v2 对部分 W6A6/W4A8 配置缺少 kernel，以 W8A8 估算延迟；后续仓库新增 CUDA 路径不能反过来证明论文已经实测这些格式。详见 [架构与轨迹指南](architecture-transfer.md)。
+**ViDiT-Q 的版本反例**：论文 v2 明确缺少 W6A6/W4A8 的 GPU kernel（原文未加限定），延迟以 W8A8 估算；后续仓库新增 CUDA 路径不能反过来证明论文已经实测这些格式。详见 [架构与轨迹指南](architecture-transfer.md)。
 
 ## Agent 如何处理未知
 

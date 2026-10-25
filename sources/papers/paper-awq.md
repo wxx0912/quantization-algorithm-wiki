@@ -13,7 +13,6 @@
   ],
   "read_locator": "摘要、§1（Figure 1）、§2（Figure 2，HTML 锚在 §1）、§3.1（Table 1）、§3.2（Eq.1–5、Table 2–3、Figure 3）、§4.1（Figure 4）、§4.2、§5 开头（Table 4–5）、§5.1（设置）、§5.2（Table 6–9、Figure 5–8）、§5.3（Figure 8 的校准效率讨论）、§5.4（Figure 9–10 的加速讨论、Table 10）",
   "topic": "reconstruction",
-  "requires_external_verification": true,
   "excerpt_sha256": null
 }
 ---
@@ -37,7 +36,7 @@ AWQ 原始论文（arXiv 2306.00978，v5；MLSys 2024）。它提出 **weight-on
 - **设置**（§5.1）：weight-only grouped、**group size 128**（INT2 实验 g64）、INT4/INT3、Pile 校准、α 20 点网格；基线 RTN 与 GPTQ（含 reorder 变体 GPTQ-R）；论文排除 ZeroQuant/AdaRound/BRECQ（依赖反向传播）。
 - **主结果**（§5.2、Table 4；WikiText-2 PPL，INT3-g128）：Llama-2 7B/13B/70B 的 AWQ **6.24/5.32/3.74**（FP16 5.47/4.88/3.32，RTN 6.66/5.52/3.98，GPTQ 6.43/5.48/3.88）；LLaMA-1 7B/13B/30B/65B 的 AWQ **6.35/5.52/4.61/3.95**（FP16 5.68/5.09/4.10/3.53）。LLaMA-7B 上 GPTQ 记 8.81、须加 reorder（GPTQ-R 6.53）才正常，AWQ 优于两者。Mixtral-8x7B / Mistral-7B（Table 5）：FP16 5.94/4.14 → INT4-g128 6.05/4.30 → INT3-g128 6.52/4.83。
 - **其他任务与数据效率**（§5.2–5.3）。OpenFlamingo-9B COCO（仅量化语言部分）INT4-g128 较 FP16 只掉 1.17（RTN −4.57、GPTQ −6.72），VILA-7B/13B 基本无损，MBPP/GSM8K 与 FP16 相当。INT2-g64 下 RTN 失效，**AWQ+GPTQ** 在 OPT 1.3B–30B 上 35.71/25.70/15.71/13.25/11.38，论文据此称二者**正交**；AWQ 用 16 条序列即超过 GPTQ 192 条，Pile 的 PubMed/Enron 域互换时 AWQ PPL 只升 0.5–0.6（GPTQ 差 2.3–4.9）。
-- **TinyChat 与加速**（§4–5.4）。Llama-2-7B 在 4090 batch 1 下生成 20 token 需 310 ms（200-token prompt 仅 10 ms），属 memory-bound。手段：on-the-fly 反量化融入 MM/MV kernel、SIMD 感知 weight packing、kernel 融合。TinyChat 相对 HF FP16 在 4090 上 2.7–3.9×，Orin 上对 llama.cpp 最高 1.7×、对 AutoGPTQ ≥2.6×。
+- **TinyChat 与加速**（§4–5.4）。LLaMA-7B 在 4090 batch 1 下生成 20 token 需 310 ms（200-token prompt 仅 10 ms），属 memory-bound（正文写 LLaMA-7B、Figure 3 图注写 Llama-2-7B，论文自身口径不一）。手段：on-the-fly 反量化融入 MM/MV kernel、SIMD 感知 weight packing、kernel 融合。TinyChat 相对 HF FP16 在 4090 上 2.7–3.9×，Orin 上对 llama.cpp 最高 1.7×、对 AutoGPTQ ≥2.6×。
 
 ## 不能推出的结论
 
@@ -45,4 +44,4 @@ AWQ 原始论文（arXiv 2306.00978，v5；MLSys 2024）。它提出 **weight-on
 - 数字绑定 group 128（INT2 为 g64）、α 的 20 点网格与 Pile 校准集；换 group size/校准数据/α 范围都会改变结果。
 - "AWQ 优于 GPTQ"是**相对论文所选的 GPTQ 配置与实现**（LLaMA-7B 上 GPTQ 需 reorder trick），不是对 GPTQ 全部实现的普适排名。
 - Table 9 的 INT2 结论来自 **AWQ 与 GPTQ 组合**，不能推出"单用 AWQ 可用 INT2"或"任意组合/顺序都有效"。
-- TinyChat 的加速来自位宽、packing、kernel 融合与平台专用实现，不是缩放搜索本身；不能外推到其他后端（llama.cpp/TensorRT-LLM）或训练场景。多模态/指令结论只覆盖 OpenFlamingo-9B（仅语言部分）、VILA-7B/13B、Vicuna 7B/13B。
+- TinyChat 的加速来自位宽、packing、kernel 融合与平台专用实现，不是缩放搜索本身；不能外推到其他后端（llama.cpp/TensorRT-LLM）或训练场景。多模态/指令结论只覆盖 OpenFlamingo-9B（仅语言部分）、VILA-7B/13B、Vicuna 7B/13B、LLaVA-13B。

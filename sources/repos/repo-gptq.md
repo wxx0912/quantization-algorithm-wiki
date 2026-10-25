@@ -12,7 +12,6 @@
   ],
   "read_locator": "gptq.py: GPTQ.add_batch、fasterquant；quant.py: Quantizer.find_params、quantize、Quant3Linear、Quantizer 的 mse 路径；llama.py/opt.py: 调用脚本的 perchannel/sym 默认",
   "topic": "core",
-  "requires_external_verification": true,
   "excerpt_sha256": null
 }
 ---
@@ -29,11 +28,19 @@
 
 ## 关键事实
 
+本页按固定 commit 整理源码中的函数行为和默认配置。源码阅读可以确认实现逻辑，但不能替代目标模型或 runtime 的实际运行。
+
 - `add_batch` 累积输入统计，`fasterquant` 执行阻尼、`actorder` 重排、Cholesky 分解与误差更新，默认 `blocksize=128`、`percdamp=.01`、`groupsize=-1`。
 - `quant.py` 的 `maxq=2^b−1` 由位宽无条件设定（`trits` 时置 −1），`sym=True` 才切换到对称范围规则。
 - 调用脚本 `llama.py`/`opt.py` 以 `perchannel=True` 且 `--sym` 默认关闭运行，故 per-row 非对称网格是该仓库的默认实验设置。
 - `mse=True` 实际累积 `|error|^norm`，默认 `norm=2.4`，另有 `grid=100`、`maxshrink=.8` 控制离散候选。
 - `actorder` 按 Hessian 对角线降序重排列；README 指出配合 `--static-groups` 时推理端无需额外处理，代码在写回权重前用 `invperm` 还原列序。
+
+### 使用边界
+
+- 本页覆盖统计量累积、阻尼、Cholesky、误差更新、量化器范围搜索和列序恢复等代码入口。
+- 外部导出器的 packed layout、目标后端的 kernel 命中、端到端吞吐和最终生成质量，需要单独验证。
+- `mse=True` 的 `norm=2.4` 是该 commit 的实现参数，不能把函数名 `mse` 当作数学定义。
 
 ## 不能推出的结论
 

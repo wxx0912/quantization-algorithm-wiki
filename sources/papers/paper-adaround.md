@@ -13,7 +13,6 @@
   ],
   "read_locator": "摘要、§1、§2（例 1、Table 1）、§3.1（Eq.9–13）、§3.2（Eq.14–20）、§3.3（Eq.21–25）、§4（相关工作）、§5.1（实验设置、Table 2–6、Figure 4）、§5.1 末（Table 7 的浮动体，讨论在 §5.2）、§5.2（Table 7–9）、附录 A（Table 10）、附录 B",
   "topic": "reconstruction",
-  "requires_external_verification": true,
   "excerpt_sha256": null
 }
 ---
