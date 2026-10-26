@@ -7,14 +7,14 @@
     "ptq",
     "learned-transform",
     "reconstruction",
-    "clipping",
     "w4a4",
     "kv-cache"
   ],
   "aliases": [
     "FlatQuant",
     "flatness",
-    "平坦化"
+    "平坦化",
+    "可学习变换"
   ],
   "related": [
     "algorithm-spinquant",

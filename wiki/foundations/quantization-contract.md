@@ -16,7 +16,10 @@
     "scale",
     "zero-point",
     "静态量化",
-    "动态量化"
+    "动态量化",
+    "校准",
+    "数值格式",
+    "KV cache"
   ],
   "related": [
     "algorithm-baselines",

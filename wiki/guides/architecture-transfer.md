@@ -19,7 +19,8 @@
     "ViDiT-Q",
     "ViDiT-Q-MP",
     "架构适配",
-    "生成过程量化"
+    "生成过程量化",
+    "架构迁移"
   ],
   "related": [
     "algorithm-qdit",

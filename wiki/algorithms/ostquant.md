@@ -12,7 +12,8 @@
   "aliases": [
     "OSTQuant",
     "QSUR",
-    "正交缩放变换"
+    "正交缩放变换",
+    "可学习变换"
   ],
   "related": [
     "algorithm-quarot",
@@ -26,7 +27,7 @@
   ],
   "confidence": "source-reported",
   "evidence_scope": "source-reported",
-  "updated": "2026-10-25"
+  "updated": "2026-10-26"
 }
 ---
 
@@ -61,7 +62,7 @@ OSTQuant 把"缩放类"与"旋转类"等价变换统一在一个可学习框架�
 - 论文报告（Table 2，LLaMA-3-8B，`0-shot 9 Avg.`）：FP 68.09；W4A16KV16 OSTQuant 67.80（QuaRot 67.27、SpinQuant 66.54）；W4A4KV4 OSTQuant 65.37（QuaRot 61.38、SpinQuant 64.10）。摘要称 W4-only 保留 99.5% 浮点精度、W4A4KV4 相对当时 SOTA 缩小 32% 差距；另称 W4A4KV4 维持至少 96% 原始性能。其中 99.5% 是摘要口径，逐模型核算并非都达到。
 - QSUR 是论文自提度量，与精度是相关性，不能当精度预测器。
 - KL-Top 会让 Wiki PPL 变差但零样本分数变好（LLaMA-2-7B：PPL 5.38→5.94，Arc-C 42.41→44.62），说明不能用 PPL 单指标判断。
-- "部署无额外开销"只指变换可融合；不含量化误差，也不保证后端支持。
+- "部署无额外开销"只指变换可离线融合进权重；Q/K 输出仍需在线做一次 Hadamard（同 QuaRot），也不含量化误差、不保证后端支持。
 - 结果限于 LLaMA 家族，不能外推到 MoE/DiT/dLLM/VLM；当前 Wiki 未复现。
 
 ## Agent 如何使用

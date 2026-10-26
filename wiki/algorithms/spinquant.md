@@ -13,7 +13,8 @@
   "aliases": [
     "SpinQuant",
     "learned rotation",
-    "学习旋转"
+    "学习旋转",
+    "可学习变换"
   ],
   "related": [
     "algorithm-quarot",

@@ -4,7 +4,7 @@
   "title": "AWQ：激活感知的权重量化",
   "type": "algorithm",
   "tags": ["ptq", "scaling", "weight-only", "calibration", "outlier"],
-  "aliases": ["Activation-aware Weight Quantization", "激活感知权重量化"],
+  "aliases": ["Activation-aware Weight Quantization", "激活感知权重量化", "掉点"],
   "related": ["algorithm-gptq", "algorithm-smoothquant", "algorithm-autoround"],
   "sources": ["paper-awq", "repo-awq"],
   "confidence": "source-reported",

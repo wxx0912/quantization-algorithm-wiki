@@ -15,7 +15,8 @@
     "FP4",
     "NVFP4",
     "MX",
-    "量化格式"
+    "量化格式",
+    "MXFP4"
   ],
   "related": [
     "foundation-quantization-contract",
@@ -32,7 +33,7 @@
   ],
   "confidence": "source-reported",
   "evidence_scope": "mixed",
-  "updated": "2026-10-25"
+  "updated": "2026-10-26"
 }
 ---
 
@@ -56,7 +57,7 @@
 | E4M3 (FP8) | 4-bit 指数 + 3-bit 尾数 | per-tensor（论文推理侧权重用 per-channel） | 最大正规值 448；**无 Inf**，只有一种 NaN，动态范围比 IEEE 约定多一个 2 的幂（17→18 binades）。推荐用于权重与激活 |
 | E5M2 (FP8) | 5-bit 指数 + 2-bit 尾数 | per-tensor | 最大正规值 57,344；遵循 IEEE 754，含 Inf/NaN，与 FP16 转换直接。推荐用于梯度 |
 | MXFP8 / MXFP6 / MXFP4 / MXINT8 | FP8 / FP6 / FP4(E2M1) / INT8 | 每块共享 **E8M0**（论文只称 8-bit 指数，细节见 OCP 规范；"无尾数 → 2 的幂"按命名推得） | 论文 Table 1 的块大小为 32；共享 scale 不编码 Inf |
-| **NVFP4** | FP4（E2M1，由"扩展自 MXFP4"推得） | **两级**：每块 E4M3 scale + 每 tensor FP32 scale | 块大小 **16**；相对 FP8 约 2–3× 吞吐、约 1.8× 显存 |
+| **NVFP4** | 4-bit 元素（位布局待官方格式规范核对） | **两级**：每块 E4M3 scale + 每 tensor FP32 scale | 块大小 **16**；相对 FP8 约 2–3× 吞吐、约 1.8× 显存 |
 
 ## 与算法、部署的分工
 
@@ -72,6 +73,7 @@
 - **W4A16 / W4A8 / W4A4 不指定位布局**：同一个 W4A16 可以是 INT4，也可以是 NVFP4；误差异质，不能只凭位宽标签比较方法。
 - **谈 "FP8" 必须说清 E4M3 还是 E5M2**：两者范围差两个数量级（448 vs 57,344），必要时要按 tensor 调缩放因子。
 - **E4M3 没有 Inf**：溢出是饱和到 448，不是变 Inf，这会改变误差形式。
+- **NVFP4 的元素位布局未核实**：来源只确认块大小 16 与两级 scale；"元素为 E2M1"是按"NVFP4 扩展自 MXFP4"推得，须按 NVIDIA 官方格式文档核对。
 - **块内共享 scale 的元数据不能忽略**：MX/NVFP4 每 16 或 32 个元素存一个 scale（NVFP4 还有一级 per-tensor FP32 scale），只按元素位宽估体积会低估。
 - **FP 格式不是均匀码本**：整数范围校准（RTN/MinMax/MSE）的公式不能直接套到 FP4/FP8，见 [baselines](../algorithms/baselines.md) 的结果边界。
 - 格式决定"码本与 scale 结构"，算法决定"如何选"，两者不能互相替代。

@@ -13,7 +13,8 @@
   "aliases": [
     "DLLMQuant",
     "dLLM 量化",
-    "扩散语言模型量化"
+    "扩散语言模型量化",
+    "生成感知量化"
   ],
   "related": [
     "guide-architecture-transfer",
@@ -27,7 +28,7 @@
   ],
   "confidence": "source-reported",
   "evidence_scope": "source-reported",
-  "updated": "2026-10-25"
+  "updated": "2026-10-26"
 }
 ---
 
@@ -35,7 +36,7 @@
 
 ## 一句话理解
 
-DLLMQuant 把 DLLM 的三个机制特点转化为量化设计：用 TMAS 校准覆盖"不同解码步 × 不同 mask 比例"的数据分布，用 IA-AQ 抑制迭代中放大最快的误差路径，用 CGQ 让权重量化补偿只看"会被解码、且高置信"的 token。它默认叠在已有的 PTQ 前端（AWQ 或 QuaRot+GPTQ）之上。
+DLLMQuant 把 DLLM 的三个机制特点转化为量化设计：用 TMAS 校准覆盖"不同解码步 × 不同 mask 比例"的数据分布，用 IA-AQ 抑制迭代中放大最快的误差路径，用 CGQ 让权重量化补偿向"会被解码、且高置信"的 token 加权。它默认叠在已有的 PTQ 前端（AWQ 或 QuaRot+GPTQ）之上。
 
 ## 核心机制
 

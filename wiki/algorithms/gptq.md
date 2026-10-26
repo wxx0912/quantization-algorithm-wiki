@@ -4,12 +4,12 @@
   "title": "GPTQ：基于输入二阶统计的权重重构",
   "type": "algorithm",
   "tags": ["weight-reconstruction", "hessian", "weight-only", "calibration"],
-  "aliases": ["GPTQ", "二阶量化", "权重误差补偿"],
+  "aliases": ["GPTQ", "二阶量化", "权重误差补偿", "掉点"],
   "related": ["algorithm-quarot", "algorithm-smoothquant"],
   "sources": ["paper-gptq", "repo-gptq"],
   "confidence": "source-reported",
   "evidence_scope": "mixed",
-  "updated": "2026-10-24"
+  "updated": "2026-10-26"
 }
 ---
 
@@ -55,7 +55,7 @@ min ||WX - W_hat X||²_F
 
 ## Agent 如何使用
 
-首轮只读本页即可判断 GPTQ 是否属于候选方法。当前来源仍处于逐条外部复核阶段，因此数字和默认参数只能作为检索线索，不能直接承诺目标模型质量或速度。若需要精确证据，再按下面路径展开：
+首轮只读本页即可判断 GPTQ 是否属于候选方法；公式、默认参数与论文数字见来源页。目标模型上的质量与速度需要独立验证，不能由本页承诺。若需要精确证据，再按下面路径展开：
 
 | 需要确认的内容 | 继续读取 |
 | --- | --- |

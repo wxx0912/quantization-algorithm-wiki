@@ -1,47 +1,220 @@
 {
   "page_types": [
-    {"name": "foundation", "label": "基础"},
-    {"name": "algorithm", "label": "算法"},
-    {"name": "guide", "label": "指南"},
-    {"name": "recipe", "label": "Recipe"},
-    {"name": "case", "label": "案例"}
+    {
+      "name": "foundation",
+      "label": "基础"
+    },
+    {
+      "name": "algorithm",
+      "label": "算法"
+    },
+    {
+      "name": "guide",
+      "label": "指南"
+    },
+    {
+      "name": "recipe",
+      "label": "Recipe"
+    },
+    {
+      "name": "case",
+      "label": "案例"
+    }
   ],
   "tags": [
-    "activation", "ar", "architecture", "benchmark", "block-reconstruction",
-    "calibration", "clipping", "comparison", "compensation", "composition",
-    "cost-constraint", "denoising", "deployment", "diagnosis", "diffusion",
-    "dit", "dllm", "equivalent-transformation", "fisher", "format",
-    "hessian", "joint-optimization", "kernel", "kv-cache", "latency",
-    "learned-transform", "llm", "low-rank", "mask", "mixed-precision",
-    "modelopt", "moe", "outlier", "paper-evidence", "performance", "ptq",
-    "qat", "quantizer", "reconstruction", "rotation", "rounding", "rtn",
-    "scaling", "search", "selection", "sensitivity", "transfer", "validation",
-    "vision", "vlm", "w4a4", "weight-only", "weight-reconstruction"
+    "activation",
+    "ar",
+    "architecture",
+    "benchmark",
+    "block-reconstruction",
+    "calibration",
+    "clipping",
+    "comparison",
+    "compensation",
+    "composition",
+    "cost-constraint",
+    "denoising",
+    "deployment",
+    "diagnosis",
+    "diffusion",
+    "dit",
+    "dllm",
+    "equivalent-transformation",
+    "fisher",
+    "format",
+    "hessian",
+    "joint-optimization",
+    "kernel",
+    "kv-cache",
+    "latency",
+    "learned-transform",
+    "llm",
+    "low-rank",
+    "mask",
+    "mixed-precision",
+    "modelopt",
+    "moe",
+    "outlier",
+    "paper-evidence",
+    "performance",
+    "ptq",
+    "qat",
+    "quantizer",
+    "reconstruction",
+    "rotation",
+    "rounding",
+    "rtn",
+    "scaling",
+    "search",
+    "selection",
+    "sensitivity",
+    "transfer",
+    "validation",
+    "vision",
+    "vlm",
+    "w4a4",
+    "weight-only",
+    "weight-reconstruction"
   ],
-  "alias_expansions": {
-    "量化基础": ["foundation-quantization-contract"],
-    "怎么选算法": ["guide-algorithm-selection", "algorithm-baselines"],
-    "掉点": ["guide-algorithm-selection", "algorithm-gptq", "algorithm-awq"],
-    "校准": ["foundation-quantization-contract", "algorithm-baselines", "guide-algorithm-selection"],
-    "组合": ["recipe-composition"],
-    "混合精度": ["algorithm-hawq", "algorithm-modelopt-autoquantize"],
-    "W4A4 加速": ["guide-deployment-evidence", "case-paper-evidence"],
-    "架构迁移": ["guide-architecture-transfer"],
-    "搜索空间": ["guide-search-space"],
-    "数值格式": ["foundation-number-formats", "foundation-quantization-contract"],
-    "FP8": ["foundation-number-formats"],
-    "NVFP4": ["foundation-number-formats"],
-    "MXFP4": ["foundation-number-formats"],
-    "生成感知量化": ["guide-search-space", "algorithm-qdit", "algorithm-dllmquant"],
-    "偏置校正": ["algorithm-bias-correction"],
-    "可学习变换": ["algorithm-ostquant", "algorithm-quarot"],
-    "KV cache": ["foundation-quantization-contract", "algorithm-flatquant", "algorithm-spinquant"],
-    "论文结果": ["case-paper-evidence"]
+  "index_groups": {
+    "title": "按算法类别与搜索轴检索",
+    "groups": [
+      {
+        "label": "数值格式与范围",
+        "tags": [
+          "format",
+          "rtn",
+          "clipping",
+          "quantizer",
+          "scaling"
+        ]
+      },
+      {
+        "label": "校准与敏感度",
+        "tags": [
+          "sensitivity",
+          "fisher",
+          "hessian",
+          "calibration"
+        ]
+      },
+      {
+        "label": "量化对象（权重 / 激活）",
+        "tags": [
+          "weight-only",
+          "activation"
+        ]
+      },
+      {
+        "label": "训练方式（PTQ / QAT）",
+        "tags": [
+          "ptq",
+          "qat"
+        ]
+      },
+      {
+        "label": "等价变换（缩放 / 旋转 / 置换）",
+        "tags": [
+          "equivalent-transformation",
+          "rotation",
+          "learned-transform"
+        ]
+      },
+      {
+        "label": "权重重构（舍入与块重构）",
+        "tags": [
+          "reconstruction",
+          "rounding",
+          "block-reconstruction",
+          "weight-reconstruction"
+        ]
+      },
+      {
+        "label": "混合精度与成本约束",
+        "tags": [
+          "mixed-precision",
+          "cost-constraint",
+          "modelopt"
+        ]
+      },
+      {
+        "label": "误差补偿（低秩与偏置）",
+        "tags": [
+          "compensation",
+          "low-rank",
+          "outlier"
+        ]
+      },
+      {
+        "label": "联合优化与组合",
+        "tags": [
+          "joint-optimization",
+          "composition"
+        ]
+      },
+      {
+        "label": "生成感知（DiT / dLLM）",
+        "tags": [
+          "dit",
+          "dllm",
+          "denoising",
+          "mask",
+          "diffusion"
+        ]
+      },
+      {
+        "label": "部署与 kernel",
+        "tags": [
+          "deployment",
+          "kernel",
+          "latency",
+          "performance",
+          "w4a4"
+        ]
+      },
+      {
+        "label": "模型与结构",
+        "tags": [
+          "ar",
+          "llm",
+          "vlm",
+          "vision",
+          "moe",
+          "kv-cache",
+          "architecture"
+        ]
+      },
+      {
+        "label": "Agent 使用与阅读路径",
+        "tags": [
+          "search",
+          "selection",
+          "diagnosis",
+          "benchmark",
+          "validation",
+          "transfer",
+          "comparison",
+          "paper-evidence"
+        ]
+      }
+    ]
   },
   "source_topics": [
-    {"name": "core", "label": "基础与样章"},
-    {"name": "reconstruction", "label": "重构与舍入"},
-    {"name": "transforms", "label": "变换与低秩"},
-    {"name": "mixed-architecture", "label": "混精与架构"}
+    {
+      "name": "core",
+      "label": "基础与样章"
+    },
+    {
+      "name": "reconstruction",
+      "label": "重构与舍入"
+    },
+    {
+      "name": "transforms",
+      "label": "变换与低秩"
+    },
+    {
+      "name": "mixed-architecture",
+      "label": "混精与架构"
+    }
   ]
 }

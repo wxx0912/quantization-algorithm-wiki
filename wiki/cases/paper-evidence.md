@@ -13,7 +13,9 @@
   "aliases": [
     "论文性能案例",
     "单层 benchmark",
-    "延迟估算"
+    "延迟估算",
+    "W4A4 加速",
+    "论文结果"
   ],
   "related": [
     "algorithm-gptq",

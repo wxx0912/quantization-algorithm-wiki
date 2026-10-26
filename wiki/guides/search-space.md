@@ -17,7 +17,8 @@
     "搜索空间",
     "量化算法类别",
     "可搜索变量",
-    "量化格式"
+    "量化格式",
+    "生成感知量化"
   ],
   "related": [
     "guide-algorithm-selection",
@@ -80,7 +81,7 @@
 | Joint optimization | [BRECQ](../algorithms/brecq.md)、[OmniQuant](../algorithms/omniquant.md) | 跨层/跨模块重构参数、损失 | 联合范围、损失、更新块 |
 | Generation-aware | [Q-DiT](../algorithms/qdit.md)（图像 DiT）、[DLLMQuant](../algorithms/dllmquant.md)（文本 dLLM） | 生成阶段或采样策略 | timestep、mask 比例、去噪/解码轨迹、校准覆盖步数 |
 
-类别是导航用的组织方式，不代表同一行方法可互换，也不代表跨行组合已成立。
+类别是导航用的组织方式，不代表同一行方法可互换，也不代表跨行组合已成立。按类别列出页面见 [index.generated.md](../../index.generated.md) 的“按算法类别与搜索轴检索”（由页面标签生成）。
 
 ## 覆盖缺口
 

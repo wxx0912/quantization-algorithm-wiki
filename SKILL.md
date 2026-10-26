@@ -1,7 +1,7 @@
 ---
 name: quantization-algorithm-wiki
 description: 查询 PTQ、权重重构、激活感知缩放、旋转变换、联合优化、低秩补偿和混合精度方法，为量化方案选择、Recipe 设计与部署证据核查提供可追溯资料。
-argument-hint: "[自然语言问题] | [--tag 标签 --type 类型] | [--alias 别名键] | [page-id]"
+argument-hint: "[自然语言问题] | [--tag 标签 --type 类型] | [page-id]"
 ---
 
 # Quantization Algorithm Wiki
@@ -16,14 +16,13 @@ argument-hint: "[自然语言问题] | [--tag 标签 --type 类型] | [--alias �
 python3 scripts/query.py "<关键词>" --limit 10
 python3 scripts/query.py --tag <标签> --type <algorithm|foundation|guide|recipe|case>
 python3 scripts/query.py "<关键词>" --json
-python3 scripts/query.py --alias <别名键>
 python3 scripts/get_page.py <page-id>
 python3 scripts/get_page.py <page-id> --follow-sources
 python3 scripts/validate.py
 python3 scripts/build_index.py --check
 ```
 
-先用方法名、别名、机制标签或短问题词缩小范围，再读取一至三篇页面，并沿 `related` 和 `sources` 展开。空格分隔的关键词采用 AND；查询是词面检索，不是语义问答。标签以 `index.generated.md` 中的实际小写标签为准；问题级别名用 `--alias` 展开，取值登记在 `data/vocabulary.yaml`。`--profile`、`--feature`、`--evidence` 属结构库的领域选项，本库没有 `data/architecture-profiles.json`，传入时返回明确错误而不是静默忽略。
+先用方法名、别名、机制标签或短问题词缩小范围，再读取一至三篇页面，并沿 `related` 和 `sources` 展开。空格分隔的关键词采用 AND；查询是词面检索，不是语义问答。检索先匹配页面 id、标题、`aliases` 与 `tags`，没有命中再退回正文并标为弱相关，结果按 `type` 分组；`--tag` 按 `data/vocabulary.yaml` 的小写标签精确匹配，未登记的标签报错。问题短语写在页面 `aliases` 里，本库没有集中映射表。
 
 ## 证据和论文阅读顺序
 

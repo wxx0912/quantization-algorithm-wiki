@@ -13,7 +13,8 @@
     "HAWQ-I",
     "HAWQ-II",
     "HAWQ-V2",
-    "Hessian AWare Quantization"
+    "Hessian AWare Quantization",
+    "混合精度"
   ],
   "related": [
     "algorithm-modelopt-autoquantize",

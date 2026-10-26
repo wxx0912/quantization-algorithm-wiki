@@ -33,7 +33,7 @@ DLLMQuant 论文（arXiv 2508.14090，v1），研究扩散式语言模型（DLLM
 - **问题**（摘要、Introduction）：把 AWQ 直接用于 LLaDA-8B 的 W4A4 会掉 **16%** 准确率（摘要），Introduction 表述为"超过 16%"。论文归因于三点：① 迭代生成 + 动态 mask ratio 使各解码步的 token 分布不同，常规随机/均匀采样校准覆盖不到；② 每步输出作为下一步输入，量化误差随迭代累积放大；③ 已解码（unmasked）token 稳定、masked token 仍具概率性，GPTQ 用统一 Hessian 等价对待所有 token 的假设失效。
 - **TMAS**（Temporal-Mask Adaptive Sampling，Alg.1）：按 block 数 `B` 与总步数 `T` 分层采样；每 block 取 `⌊512/B⌋` 条样本；把 mask ratio 分 4 档、目标比例 `[0.3,0.2,0.2,0.3]`；相邻步分布相似、远离步差异大，故按区间跨步采样。论文称该采样能恢复 INT4 模型大部分性能。
 - **IA-AQ**（Interaction-Aware Activation Quantization，Eq.6–9）：定位到 attention 中 softmax 输出与 value 矩阵相乘这一步是误差累积主因；重设 `V` 的量化误差度量为以 softmax 输出加权的 Frobenius 误差（Eq.7），再对标准 scale 乘系数 `α`（从 `{1.0,0.8}` 搜索）以支持交互强/重要的 token（Eq.8–9）。
-- **CGQ**（Certainty-Guided Quantization，Eq.10）：用 mask 指示与 token 最终分数的平方根加权 Hessian（`(X⊙(1[mask]+√sc))` 的 Gram），只在被解码且高置信的区域上加重，使权重量化补偿更贴合 DLLM 迭代解码。
+- **CGQ**（Certainty-Guided Quantization，Eq.10）：根据 mask 状态与 token 最终分数构造加权输入 `X⊙(1[X_t=M]+√sc_t)`，再计算其 Gram 矩阵 `H = X̃X̃ᵀ` 作为 Hessian 用于权重误差补偿；这是**连续加权**，不是对 token 进行硬筛选。
 - **设置**：权重对称均匀量化、per-channel；激活非对称均匀、per-token；校准取 WinoGrande 的 128 段；评测 TruthfulQA-MC2、Arc-C、HellaSwag、WinoGrande、PIQA、MMLU、C-EVAL、HumanEval、GSM8K 共九项取平均。
 - **结果**（Table 1，LLaDA，W4A4，九任务平均）：FP **59.87**；RTN 44.23；AWQ 48.09；QuaRot 51.03；AWQ+DLLMQuant 49.26；QuaRot+DLLMQuant **54.29**。GSM8K：QuaRot 44.57 → DLLMQuant **56.25**（提升约 11.7 分）。
 - **消融**（Table 2，LLaDA，W4A4 平均）：GPTQ 51.03 → +TMAS 52.36 → +CGQ 53.16 → +IA-AQ **54.29**；AWQ 48.09 → 49.26。Table 3 显示 CGQ 的 mask 与 score 两个因子需同时用。

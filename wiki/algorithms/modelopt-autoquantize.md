@@ -13,7 +13,8 @@
   "aliases": [
     "AutoQuantize",
     "auto_quantize",
-    "自动混精"
+    "自动混精",
+    "混合精度"
   ],
   "related": [
     "algorithm-hawq",

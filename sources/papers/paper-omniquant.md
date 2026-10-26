@@ -21,7 +21,7 @@ OmniQuant 原始论文（arXiv 2308.13137，v3；ICLR 2024）。它把量化参�
 
 它是 `algorithm-omniquant` 的原理依据，也是 `algorithm-baselines`（对 RTN/GPTQ/AWQ、SmoothQuant/OS+/RPTQ/LLM-QAT）与 `foundation-quantization-contract` 的一手材料。
 
-范围边界：方法本身是 PTQ 但要**梯度优化**（20–40 epochs）；只处理线性层与 attention 的 Q/K/V，SoftMax 输出保持全精度；实测部署只做 weight-only。
+范围边界：方法本身是 PTQ 但要**梯度优化**（20–40 epochs）；方法涉及线性层以及 attention 中 Q/K 的等价变换，V 参与量化计算、但论文没有为 V 引入显式 LET 变换；SoftMax 输出保持全精度；实测部署只做 weight-only。
 
 ## 已读定位与阅读形式
 
@@ -46,5 +46,5 @@ OmniQuant 原始论文（arXiv 2308.13137，v3；ICLR 2024）。它把量化参�
 - Table 2 的对比来自不同来源：SmoothQuant 与 OS+ 是论文自己复现、LLM-QAT 是 QAT，不能当作同一 pipeline 的严格公平对照。
 - W4A4 不是无损：LLaMA-1-7B 上 52.65 vs FP16 64.09（差 11.4 分），论文结论只是"显著优于同期方法"，不能读成"W4A4 可直接生产"。
 - 校准集是 WikiText2 128×2048；论文附录 A.3 用 WikiText2/C4/Pile 做过校准集消融，PPL 波动 0.0006–0.17、并称 16 条样本即可收敛，故对校准分布不敏感；但 lr（5e-3/1e-2）与 20–40 epochs 等超参仍非普适。
-- 方法只覆盖"除 FFN 第二线性层外的线性层 + attention Q/K/V"，SoftMax 输出不量化；不能当作"任意算子都能 W4A4"的依据，也不能推出 V 需要显式变换。
+- LET 只施加于除 FFN 第二线性层外的所有线性层（论文理由是 after non-linearity 的稀疏特征会让可学习变换的梯度不稳），该层的**权重仍照常量化**，只是不做等价变换——不能读成"方法不覆盖该层"。SoftMax 输出保留 16-bit、不量化；不能当作"任意算子都能 W4A4"的依据，也不能推出 V 需要显式变换。
 - Falcon-180B、OPT 全家族、LLaMA-1/2 的完整结果已逐值核对（附录 A.8 Full Results）：Table A18 的 Falcon-180B 从 BF16/FP16 3.29/6.64/6.31 到 W3A16g512 的 OmniQuant 3.71/6.95/6.71；Table A20–A22（OPT weight-only）、Table A25（OPT weight-activation）、Table A19/A23/A24（LLaMA-1/2）亦逐值读到，未见与前文不一致。这些仍只是论文给定配置下的结果。

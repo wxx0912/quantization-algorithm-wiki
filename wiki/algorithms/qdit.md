@@ -13,7 +13,8 @@
   "aliases": [
     "Q-DiT",
     "DiT PTQ",
-    "扩散 Transformer 量化"
+    "扩散 Transformer 量化",
+    "生成感知量化"
   ],
   "related": [
     "guide-architecture-transfer",

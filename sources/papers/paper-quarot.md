@@ -35,12 +35,12 @@ QuaRot 原始论文（arXiv 2404.00456，v2；NeurIPS 2024）。它用**计算�
 - **旋转插入**（§4，Eq.4–14）：RMSNorm 的线性缩放先融进相邻权重、再与 Hadamard `Q` 相乘（`W_k ← Qᵀ·diag(α)·W_k`）；down-proj 前插入满精度 online Hadamard（`W_down ← H·W_down`）；attention 按 head 插入 `H_{d_h}`，再用 `H_{n_h×d_h} = (I⊗H_{d_h})(H_{n_h}⊗I)` 拆成"融进 `W_out`"+"对激活在线做 `H_{n_h}⊗I`"；key 因 RoPE 无法直接融合，改为 query/key 在线 head-wise Hadamard，并选用 Post-RoPE caching（解码时只对一个 query 做变换）。
 - **Stage 2 量化配置**（§5 Setup）：激活 per-token 对称、clipping 0.9；KV cache 非对称、group 128、clipping 0.95；权重 per-column 对称、RTN 或 GPTQ、clipping 由一维线性搜索定；GPTQ 校准集为 WikiText 128×2048。在单张 NVIDIA A100 上，Llama-2-70B 的 QuaRot 改造约 5 分钟、GPTQ 再约 2 小时（RTX 3090 只用于性能实验）。
 - **主结果**（§5.1，Table 1–2）。WikiText-2 PPL（4-bit）：FP16 7B/13B/70B = 5.47/4.88/3.32，QuaRot(GPTQ，无 outlier 通道) **6.10/5.40/3.79**，QuaRot-128G 5.93/5.26/3.61；对照 SmoothQuant(RTN) 83.12/35.88、OmniQuant 14.26/12.30、QUIK-4B 8.87/7.78/6.91。零样本平均分（A4W4KV4）：FP16 69.82/72.59/77.07 → QuaRot 65.64/69.79/75.98（论文称平均分最多损失 4.18%，70B 仅 1.09%）。
-- **RTN / 分组 / KV**（Table 3–4、附录 A.3）。8-bit RTN 完全保持 FP16 精度且无需校准集；4-bit RTN 明显更差（7B 8.37 vs GPTQ 6.10，70B 4.14 vs 3.79），差距随模型变大而缩小。4-bit+GPTQ 下 group size 越小越好（无分组 6.10/5.40/3.79 → 128G 5.93/5.26/3.61 → 64G 5.88/5.25/3.58），但每 group 存 scale、kernel 更复杂。KV cache 消融（group 128，权重/激活高精度）：7B 上 4/4 位 PPL 5.51、3/4 位 5.65、2/2 位 9.23，key 比 value 更敏感。
+- **RTN / 分组 / KV**（Table 3–4、附录 A.3）。论文称 6/8-bit 量化"无损"；逐值看 8-bit RTN 已与 FP16 几乎一致（7B PPL 5.50 vs 5.47、0-shot 平均 69.65 vs 69.82）、6-bit 仍有小差距（5.56 vs 5.47），8-bit RTN 无需校准集；4-bit RTN 明显更差（7B 8.37 vs GPTQ 6.10，70B 4.14 vs 3.79），差距随模型变大而缩小。4-bit+GPTQ 下 group size 越小越好（无分组 6.10/5.40/3.79 → 128G 5.93/5.26/3.61 → 64G 5.88/5.25/3.58），但每 group 存 scale、kernel 更复杂。KV cache 消融（group 128，权重/激活高精度）：7B 上 4/4 位 PPL 5.51、3/4 位 5.65、2/2 位 9.23，key 比 value 更敏感。
 - **性能与扩展**（§5.2，Figure 4；RTX 3090，单 transformer block）。prefill 上 7B **1.97×–2.16×**、70B 最多 **3.33×**；decoding 峰值显存较 FP16 至少 **3.63×** 节省。用 CUTLASS 做 INT4 TensorCore 乘法（INT32 累加），KV cache 量化基于 FlashInfer。代码 `github.com/spcl/QuaRot`；附录 A.8/A.9 给 LLaMA-3 与 Phi-3-mini 结果（Table 11–13），说明流程不限于 LLaMA-2。
 
 ## 不能推出的结论
 
-- "全 4-bit"指权重/激活/KV 都是 4-bit 且不保留高精度通道，但**不等于无需校准**：默认权重用 GPTQ，需要 128 条 WikiText 样本；论文说"无需校准数据"的是 RTN，并称 6/8-bit 无损；附录逐值看 8-bit 已与 FP16 几乎一致（7B PPL 5.50 vs 5.47、0-shot 69.65 vs 69.82），6-bit 仍有小差距（7B PPL 5.56 vs 5.47、0-shot 69.42 vs 69.82），4-bit RTN 明显掉点（7B PPL 8.37）。
+- "全 4-bit"指权重/激活/KV 都是 4-bit 且不保留高精度通道，但**不等于无需校准**：默认权重用 GPTQ，需要 128 条 WikiText 样本；论文所称"无需校准数据"只适用于 RTN；6/8-bit 的"无损"是论文口径，逐值数字见上（8-bit 7B 5.50 vs 5.47、6-bit 5.56 vs 5.47），4-bit RTN 明显掉点（7B PPL 8.37）。
 - 旋转是数学等价变换，本身不引入误差；Table 1/2 的精度损失来自量化，不能归因于旋转，也不能推出"旋转消除量化误差"。
 - Table 1 的对照方法不是在统一实现下复现的（SmoothQuant/OmniQuant 取自 OmniQuant 论文，QUIK 用"全部层 4-bit"配置），不能当作同一 pipeline 的公平对照。
 - 1.97×–3.33× 加速与 3.63× 显存节省是**单 block**、RTX 3090、自定义 CUTLASS kernel 下的测量，不能外推到整机端到端、A100/H100 或其它 kernel。
