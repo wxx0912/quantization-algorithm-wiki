@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# yhhhli/BRECQ — 官方实现（block_recon 与 LossFunction）
-
 ## 这份来源是什么
 
 BRECQ 官方实现，用于核对默认优化预算与 Fisher 模式的实际数值口径，是 `algorithm-brecq` 的源码依据。

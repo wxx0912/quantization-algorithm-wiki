@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# facebookresearch/SpinQuant — 官方实现（旋转训练与 PTQ 流程）
-
 ## 这份来源是什么
 
 SpinQuant 官方实现，用于核对旋转参数的构造、约束优化实现与 PTQ 入口，是 `algorithm-spinquant` 的源码依据。

@@ -23,7 +23,7 @@
   "sources": [
     "code-modelopt-autoquantize"
   ],
-  "confidence": "verified",
+  "confidence": "source-reported",
   "evidence_scope": "mixed",
   "updated": "2026-10-24"
 }

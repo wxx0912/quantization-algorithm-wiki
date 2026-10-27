@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# IST-DASLab/gptq — 论文官方实现（fasterquant 与 Quant3Linear）
-
 ## 这份来源是什么
 
 论文作者的官方实现快照，用于核对算法落到代码后的默认参数与数值细节（阻尼、列顺序、范围搜索的目标函数），是 `algorithm-gptq`、`algorithm-baselines` 与 `foundation-quantization-contract` 的源码依据。

@@ -15,8 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-# SVDQuant: Absorbing Outliers by Low-Rank Components for 4-Bit Diffusion Models
-
 ## 这份来源是什么
 
 SVDQuant 原始论文（arXiv 2411.05007；本页以 v1 为基线，并标注 v3 camera-ready 的关键差异），给出"通道缩放 + 截断 SVD 低秩分支 + 4-bit 残差分支"的 W4A4 分解、误差分析、配套推理引擎与扩散模型结果，是 `algorithm-svdquant`、`guide-deployment-evidence` 与 `recipe-composition` 的依据。

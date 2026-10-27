@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# nunchux-ai/nunchaku — SVDQuant 配套推理引擎（低秩与低比特融合 kernel）
-
 > 仓库原名 `mit-han-lab/nunchaku`：本条目钉住的 commit 的 README 中 nunchaku 仓库链接已全部指向 `github.com/nunchux-ai/nunchaku`，`url` 中的 `mit-han-lab` 为旧名。
 
 ## 这份来源是什么

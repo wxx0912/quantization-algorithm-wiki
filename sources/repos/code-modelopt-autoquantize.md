@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# NVIDIA/Model-Optimizer — AutoQuantize 实现（受成本约束的格式搜索）
-
 ## 这份来源是什么
 
 NVIDIA Model-Optimizer 的 AutoQuantize 实现。本页以实现为依据，未确定可覆盖整个接口的统一算法论文；仅 `aumann_shapley` 子路径引用了 **arXiv:2607.12266**（*Saturation Makes Quantization Error Additive: A Coverage Model with a Certificate*，v1，2026-07-14），该论文已核对。本条目是 `algorithm-modelopt-autoquantize` 的唯一来源：页面结论来自固定 commit 的静态源码核对与该论文的方法语义。

@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# intel/auto-round — AutoRound/SignRound 官方实现与组合文档
-
 ## 这份来源是什么
 
 AutoRound 官方实现，用于核对 SignRound 的迭代与最优状态保存、量化反量化路径以及组合能力声明，是 `algorithm-autoround` 的源码依据。

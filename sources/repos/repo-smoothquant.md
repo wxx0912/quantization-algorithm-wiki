@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# mit-han-lab/smoothquant — 官方实现（α 平滑与 W8A8 量化入口）
-
 ## 这份来源是什么
 
 SmoothQuant 官方实现，用于核对 α 平滑公式、多模块成组方式、校准统计口径与 W8A8 各粒度入口，是 `algorithm-smoothquant` 的源码依据。

@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# ruikangliu/FlatQuant — 官方实现（变换参数化、块训练与重参数化）
-
 ## 这份来源是什么
 
 FlatQuant 官方实现，用于核对变换的参数化与逆变换、块训练的输入缓存构造以及 fake/real quant 的边界，是 `algorithm-flatquant` 的源码依据。

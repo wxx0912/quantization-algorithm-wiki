@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# quic/aimet — AdaRound 的维护实现（只学舍入参数 α）
-
 ## 这份来源是什么
 
 作者机构（Qualcomm）维护的 AdaRound 实现，用于核对“只学习舍入参数、scale/zero-point 由量化器提供”这一分工，以及 warm start 与 β 退火的具体调度，是 `algorithm-adaround` 的源码依据。

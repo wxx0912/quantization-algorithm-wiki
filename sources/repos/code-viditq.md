@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# A-suozhang/ViDiT-Q — 官方实现（量化层、基础量化器与 CUDA kernel）
-
 ## 这份来源是什么
 
 ViDiT-Q 官方实现，用于核对量化层的静态权重/动态激活分工、通道平衡与旋转的落地顺序、混合精度的实现方式，以及仿真与 CUDA kernel 的分层，是 `guide-architecture-transfer`、`guide-deployment-evidence` 与 `case-paper-evidence` 的源码依据。

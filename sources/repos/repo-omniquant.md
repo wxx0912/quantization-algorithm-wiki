@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# OpenGVLab/OmniQuant — 官方实现（LWC/LET 与量化器）
-
 ## 这份来源是什么
 
 OmniQuant 官方实现，用于核对 LWC/LET 在代码中的参数化与融合方式，是 `algorithm-omniquant` 的源码依据。

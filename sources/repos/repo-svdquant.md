@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# mit-han-lab/deepcompressor — SVDQuant 官方实现与配置
-
 ## 这份来源是什么
 
 SVDQuant 官方实现与配置，用于核对低秩分支的构造、迭代校准与默认预算，是 `algorithm-svdquant` 的源码依据。

@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# mit-han-lab/llm-awq — 官方实现（scale 比率搜索与 auto_clip）
-
 ## 这份来源是什么
 
 AWQ 官方实现，用于核对 scale 搜索的候选集合、评价口径与落地方式，以及 local clipping 的比较对象与跳过范围，是 `algorithm-awq` 的源码依据。

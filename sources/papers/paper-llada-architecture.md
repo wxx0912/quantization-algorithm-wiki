@@ -16,8 +16,6 @@
   "excerpt_sha256": null
 }
 ---
-# LLaDA: Large Language Diffusion Models（架构与过程范围）
-
 ## 这份来源是什么
 
 LLaDA 原始论文（arXiv 2502.09992，v2）。本条目只登记与**架构和生成过程**有关的已读范围：LLaDA 是掩码式扩散语言模型（masked diffusion model，MDM），用前向加噪（mask）与反向去噪（remasking）替代自回归的 next-token prediction。它是 `guide-architecture-transfer` 里"dLLM 与 AR 数据流不同"这一判断的架构依据，不作为任何量化质量或性能证据。

@@ -15,9 +15,6 @@
   "excerpt_sha256": null
 }
 ---
-
-# spcl/QuaRot — 官方参考实现（fake_quant 仿真与 4-bit kernel）
-
 ## 这份来源是什么
 
 QuaRot 官方参考实现，用于核对旋转的构造与吸收位置、激活量化粒度、在线 Hadamard 的挂载点，以及仿真与真实 kernel 的分层，是 `algorithm-quarot` 的源码依据。
