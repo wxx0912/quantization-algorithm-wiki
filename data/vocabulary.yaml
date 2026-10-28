@@ -76,6 +76,7 @@
     "weight-only",
     "weight-reconstruction"
   ],
+  "cross_cutting_tags": [],
   "index_groups": {
     "title": "按算法类别与搜索轴检索",
     "groups": [
@@ -215,6 +216,10 @@
     {
       "name": "mixed-architecture",
       "label": "混精与架构"
+    },
+    {
+      "name": "cache",
+      "label": "Cache 与长上下文"
     }
   ]
 }

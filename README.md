@@ -2,7 +2,7 @@
 
 面向研究人员与 Coding Agent 的量化算法知识库，为 AnyPTQ 的候选方法选择、Recipe 组织和实验设计提供可追溯依据。当前以 PTQ 为主，说明算法的具体计算、修改变量、校准需求、组合边界和实现证据。
 
-v0.1 已收录 18 篇算法与基线页面，覆盖 RTN/范围校准、GPTQ、AdaRound、AutoRound、AWQ、SmoothQuant、QuaRot、SpinQuant、FlatQuant、BRECQ、OmniQuant、SVDQuant、HAWQ、ModelOpt AutoQuantize、Bias Correction、OSTQuant、Q-DiT 与 dLLMQuant。另有数值契约、算法选择、架构迁移、部署证据、组合 Recipe 与论文案例导航。
+v0.1 已收录 33 篇算法与基线页面，覆盖 RTN/范围校准、GPTQ、AdaRound、AutoRound、AWQ、SmoothQuant、QuaRot、SpinQuant、FlatQuant、BRECQ、OmniQuant、SVDQuant、HAWQ、ModelOpt AutoQuantize、Bias Correction、OSTQuant、Q-DiT、PTQ4DiT、RepQ-ViT、ViDiT-Q、DuQuant、QuIP#、LLM.int8()、LLM-MQ、KVQuant、SKVQ、SoloQ、STaR-Quant、Quant-dLLM、DLLMQuant、FAIR-Calib、MoEQuant 与 MC-MoE。另有数值契约、算法选择、架构迁移、部署证据、组合 Recipe 与论文案例导航。
 
 这是知识与检索工具的交付。论文结果、固定版本源码核对、迁移假设分别标明；本项目没有运行模型量化、训练或 GPU benchmark，也不宣称所有 Recipe 已能在任意后端执行。来源按“一来源一文件”登记在 `sources/papers/` 与 `sources/repos/`，每篇带版本锚、阅读定位与“不能推出的结论”；页面用 `confidence`/`evidence_scope` 标注整体证据强度。
 

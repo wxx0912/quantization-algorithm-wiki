@@ -4,7 +4,7 @@
   "title": "ViDiT-Q LaTeX 源码包（arXiv src 2406.02540v2）",
   "category": "paper",
   "url": "https://arxiv.org/src/2406.02540v2",
-  "version": "v2（2024-06-30）",
+  "version": "v2（2024-06-30，源码包）",
   "version_kind": "paper-version",
   "retrieved_at": "2026-10-24",
   "read_form": [

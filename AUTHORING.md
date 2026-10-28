@@ -59,6 +59,8 @@ Wiki 不复述整篇论文，Source 也不与 Wiki 重复写一份总结。两�
 
 页面 `aliases` 放同义名、缩写和常见问题短语（如「掉点」「怎么选算法」「数值格式」）。检索按词面匹配，`aliases` 是唯一的别名载体：没有集中映射表，一条问题短语要写在所有该回答它的页面上；同一页不要写只在连字符或大小写上不同的重复项（P10 会报错）。
 
+**标签登记**：`tags` 的取值必须先写进 `data/vocabulary.yaml` 的 `tags`，再归入 `index_groups` 的某个分组——只登记 `tags` 会触发 P12。只作总分类、不属任何算法类别的标签登记到 `cross_cutting_tags`，不进分组。
+
 ## 4. 页面正文
 
 正文以一级标题开头（P7）。`wiki/` 除模板外，每篇页面用固定 frontmatter 加正文小节。
@@ -148,6 +150,7 @@ Wiki 不复述整篇论文，Source 也不与 Wiki 重复写一份总结。两�
 - source 页四节齐全，"不能推出的结论"非空。
 - wiki 页讲清算法机制、适用条件与边界；论文事实、源码事实、工程推导分开。
 - frontmatter 字段齐全、`tags` 取自词表、`sources` / `related` 指向已登记 id。
+- 新增标签已同时登记到 `vocabulary.yaml` 的 `tags` 与 `index_groups` 的某个分组（跨切面总分类登记到 `cross_cutting_tags`）。
 - 跑通：
 
 ```bash
